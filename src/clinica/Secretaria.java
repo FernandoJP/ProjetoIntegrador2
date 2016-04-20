@@ -82,7 +82,7 @@ public class Secretaria extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(39, 142, 108));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/clinica-logo-branco.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/clinica-logo-branco.png"))); // NOI18N
         jLabel1.setMaximumSize(new java.awt.Dimension(200, 116));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

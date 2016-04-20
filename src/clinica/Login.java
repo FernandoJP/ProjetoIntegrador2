@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(800, 480));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/logo-menor.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/logo-menor.png"))); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
