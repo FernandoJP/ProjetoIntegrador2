@@ -1,0 +1,6 @@
+Alterar um texto: nomeVariavel.setText("");
+
+Pegar valor de campo de texto: nomeVariavel.getText();
+
+Imprimir dados: 
+JOptionPane.showMessageDialog(null, "Mensagem", "Nome janela", JOptionPane.PLAIN_MESSAGE);
