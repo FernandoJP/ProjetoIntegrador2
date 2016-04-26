@@ -16,6 +16,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
      */
     public NovoAgendamento() {
         initComponents();
+        setResizable(false);
     }
 
     /**
@@ -124,7 +125,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Secretaria > Agenda");
+        jLabel4.setText("Recepção > Agenda");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));

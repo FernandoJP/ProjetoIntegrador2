@@ -4,3 +4,8 @@ Pegar valor de campo de texto: nomeVariavel.getText();
 
 Imprimir dados: 
 JOptionPane.showMessageDialog(null, "Mensagem", "Nome janela", JOptionPane.PLAIN_MESSAGE);
+
+Abrir outra tela e fechar a atual
+new Agenda().setVisible(true); 
+setVisible(false);
+dispose();
