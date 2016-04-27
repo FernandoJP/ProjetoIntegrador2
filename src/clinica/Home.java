@@ -3,20 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package prototipopi;
+package clinica;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author fernando.jpaula2
  */
-public class AgendaDoMedico extends javax.swing.JFrame {
+public class Home extends javax.swing.JFrame {
 
     /**
      * Creates new form Prototipo
      */
-    public AgendaDoMedico() {
+    public Home() {
         initComponents();
+        setResizable(false);
+        
+        //alterar o look and feel do sistema
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SwingUtilities.updateComponentTreeUI(this);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,18 +53,15 @@ public class AgendaDoMedico extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        cadPacientesBtn = new javax.swing.JButton();
+        conPacientesBtn = new javax.swing.JButton();
+        agendaBtn = new javax.swing.JButton();
+        cadFuncionariosBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,34 +98,15 @@ public class AgendaDoMedico extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        jButton7.setBackground(new java.awt.Color(52, 152, 219));
-        jButton7.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Fazer Login");
-        jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("17/04");
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel12.setText("Segunda");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 152, 219));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setPreferredSize(new java.awt.Dimension(800, 600));
+        jPanel5.setPreferredSize(new java.awt.Dimension(800, 480));
 
         jPanel4.setBackground(new java.awt.Color(39, 142, 108));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/prototipopi/clinica-logo-branco.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/clinica-logo-branco.png"))); // NOI18N
         jLabel1.setMaximumSize(new java.awt.Dimension(200, 116));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -116,7 +116,7 @@ public class AgendaDoMedico extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(647, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,90 +125,97 @@ public class AgendaDoMedico extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 142, 108));
-        jLabel3.setText("Agenda do médico");
+        jLabel3.setText("Gerenciar agenda");
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Médico > Agenda");
-
-        jTextField3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 153, 153));
-        jTextField3.setText("17/04/2016");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        cadPacientesBtn.setBackground(new java.awt.Color(52, 152, 219));
+        cadPacientesBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        cadPacientesBtn.setForeground(new java.awt.Color(102, 102, 102));
+        cadPacientesBtn.setText("Cadastrar Paciente");
+        cadPacientesBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        cadPacientesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                cadPacientesBtnActionPerformed(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("Data:");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"8:00", "", null, null, null, null, null, null},
-                {"8:30", null, null, null, null, null, null, null},
-                {"9:00", null, null, null, null, null, null, null},
-                {"9:30", null, null, null, null, null, null, null},
-                {"10:00", null, null, null, null, null, null, null},
-                {"10:30", null, null, null, null, null, null, null},
-                {"11:00", null, null, null, null, null, null, null},
-                {"11:30", null, null, null, null, null, null, null},
-                {"12:00", null, null, null, null, null, null, null},
-                {"12:30", null, null, null, null, null, null, null},
-                {"13:00", null, null, null, null, null, null, null},
-                {"13:30", null, null, null, null, null, null, null},
-                {"14:00", null, null, null, null, null, null, null},
-                {"14:30", null, null, null, null, null, null, null},
-                {"15:00", null, null, null, null, null, null, null},
-                {"15:30", null, null, null, null, null, null, null},
-                {"16:00", null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Horário", "Domingo - 17/04", "Segunda - 18/04", "Terça - 19/04", "Quarta - 20/04", "Quinta - 21/04", "Sexta - 22/04", "Sábado - 23/04"
+        conPacientesBtn.setBackground(new java.awt.Color(52, 152, 219));
+        conPacientesBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        conPacientesBtn.setForeground(new java.awt.Color(102, 102, 102));
+        conPacientesBtn.setText("Consultar Pacientes");
+        conPacientesBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        conPacientesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conPacientesBtnActionPerformed(evt);
             }
-        ));
-        jTable1.setMaximumSize(new java.awt.Dimension(400, 400));
-        jTable1.setMinimumSize(new java.awt.Dimension(400, 400));
-        jScrollPane1.setViewportView(jTable1);
+        });
+
+        agendaBtn.setBackground(new java.awt.Color(52, 152, 219));
+        agendaBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        agendaBtn.setForeground(new java.awt.Color(102, 102, 102));
+        agendaBtn.setText("Agenda");
+        agendaBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        agendaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agendaBtnActionPerformed(evt);
+            }
+        });
+
+        cadFuncionariosBtn.setBackground(new java.awt.Color(52, 152, 219));
+        cadFuncionariosBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        cadFuncionariosBtn.setForeground(new java.awt.Color(102, 102, 102));
+        cadFuncionariosBtn.setText("Cadastrar Funcionário");
+        cadFuncionariosBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        cadFuncionariosBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadFuncionariosBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("- Colocar icones em todos botões");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                .addComponent(agendaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(conPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(cadPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cadFuncionariosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(jLabel3)))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addGap(79, 79, 79)
                 .addComponent(jLabel3)
-                .addGap(5, 5, 5)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(agendaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(conPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addComponent(cadFuncionariosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -229,13 +236,30 @@ public class AgendaDoMedico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void conPacientesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conPacientesBtnActionPerformed
+        new ConsultarPacientes().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_conPacientesBtnActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void cadPacientesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadPacientesBtnActionPerformed
+        new CadastrarPacientes().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_cadPacientesBtnActionPerformed
+
+    private void agendaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendaBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        new Agenda().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_agendaBtnActionPerformed
+
+    private void cadFuncionariosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionariosBtnActionPerformed
+        new CadastrarFuncionario().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_cadFuncionariosBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,78 +278,14 @@ public class AgendaDoMedico extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -394,27 +354,24 @@ public class AgendaDoMedico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Agenda().setVisible(true);
+                new Home().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agendaBtn;
+    private javax.swing.JButton cadFuncionariosBtn;
+    private javax.swing.JButton cadPacientesBtn;
+    private javax.swing.JButton conPacientesBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
