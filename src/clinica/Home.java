@@ -61,7 +61,6 @@ public class Home extends javax.swing.JFrame {
         conPacientesBtn = new javax.swing.JButton();
         agendaBtn = new javax.swing.JButton();
         cadFuncionariosBtn = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -128,8 +127,9 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setText("Gerenciar agenda");
 
         cadPacientesBtn.setBackground(new java.awt.Color(52, 152, 219));
-        cadPacientesBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        cadPacientesBtn.setForeground(new java.awt.Color(102, 102, 102));
+        cadPacientesBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        cadPacientesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cadPacientesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/cadastrar-pacientes-icon.png"))); // NOI18N
         cadPacientesBtn.setText("Cadastrar Paciente");
         cadPacientesBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cadPacientesBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -139,9 +139,10 @@ public class Home extends javax.swing.JFrame {
         });
 
         conPacientesBtn.setBackground(new java.awt.Color(52, 152, 219));
-        conPacientesBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        conPacientesBtn.setForeground(new java.awt.Color(102, 102, 102));
-        conPacientesBtn.setText("Consultar Pacientes");
+        conPacientesBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        conPacientesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        conPacientesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/consultar-icon.png"))); // NOI18N
+        conPacientesBtn.setText("Consultar Paciente");
         conPacientesBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         conPacientesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,8 +151,9 @@ public class Home extends javax.swing.JFrame {
         });
 
         agendaBtn.setBackground(new java.awt.Color(52, 152, 219));
-        agendaBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        agendaBtn.setForeground(new java.awt.Color(102, 102, 102));
+        agendaBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        agendaBtn.setForeground(new java.awt.Color(255, 255, 255));
+        agendaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/agenda-icon.png"))); // NOI18N
         agendaBtn.setText("Agenda");
         agendaBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         agendaBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -161,8 +163,9 @@ public class Home extends javax.swing.JFrame {
         });
 
         cadFuncionariosBtn.setBackground(new java.awt.Color(52, 152, 219));
-        cadFuncionariosBtn.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        cadFuncionariosBtn.setForeground(new java.awt.Color(102, 102, 102));
+        cadFuncionariosBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        cadFuncionariosBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cadFuncionariosBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/cadastrar-funcionarios-icon.png"))); // NOI18N
         cadFuncionariosBtn.setText("Cadastrar Funcionário");
         cadFuncionariosBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cadFuncionariosBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -171,33 +174,26 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("- Colocar icones em todos botões");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(162, 162, 162)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(agendaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
-                                .addComponent(conPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(cadPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cadFuncionariosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cadPacientesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(agendaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(conPacientesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cadFuncionariosBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addComponent(jLabel3)))
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,9 +209,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cadFuncionariosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cadPacientesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -366,7 +360,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton conPacientesBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

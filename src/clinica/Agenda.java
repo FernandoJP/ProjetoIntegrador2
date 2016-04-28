@@ -8,6 +8,7 @@ package clinica;
 import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -47,7 +48,7 @@ public class Agenda extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -55,7 +56,7 @@ public class Agenda extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        relatorioBtn = new javax.swing.JButton();
+        voltarBtn = new javax.swing.JButton();
         relatorioBtn1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -160,7 +161,7 @@ public class Agenda extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
         jComboBox2.setToolTipText("");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
@@ -213,17 +214,18 @@ public class Agenda extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
 
-        relatorioBtn.setBackground(new java.awt.Color(228, 238, 238));
-        relatorioBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        relatorioBtn.setForeground(new java.awt.Color(102, 102, 102));
-        relatorioBtn.setText(" Voltar");
-        relatorioBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        relatorioBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        relatorioBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        relatorioBtn.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        relatorioBtn.addActionListener(new java.awt.event.ActionListener() {
+        voltarBtn.setBackground(new java.awt.Color(255, 255, 255));
+        voltarBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        voltarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        voltarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/back-icon.png"))); // NOI18N
+        voltarBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        voltarBtn.setBorderPainted(false);
+        voltarBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        voltarBtn.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        voltarBtn.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        voltarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                relatorioBtnActionPerformed(evt);
+                voltarBtnActionPerformed(evt);
             }
         });
 
@@ -246,7 +248,7 @@ public class Agenda extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(voltarBtn)
                     .addComponent(jLabel3)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -261,7 +263,7 @@ public class Agenda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                     .addContainerGap(859, Short.MAX_VALUE)
@@ -272,9 +274,9 @@ public class Agenda extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(relatorioBtn)
                 .addGap(10, 10, 10)
+                .addComponent(voltarBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -286,7 +288,7 @@ public class Agenda extends javax.swing.JFrame {
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(178, 178, 178)
@@ -300,7 +302,7 @@ public class Agenda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 790, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,9 +327,11 @@ public class Agenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_relatorioBtnActionPerformed
+    private void voltarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtnActionPerformed
+        new Home().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_voltarBtnActionPerformed
 
     private void relatorioBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtn1ActionPerformed
         // TODO add your handling code here:
@@ -516,7 +520,7 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JButton relatorioBtn;
     private javax.swing.JButton relatorioBtn1;
+    private javax.swing.JButton voltarBtn;
     // End of variables declaration//GEN-END:variables
 }
