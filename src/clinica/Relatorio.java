@@ -154,12 +154,12 @@ public class Relatorio extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 142, 108));
-        jLabel3.setText("Realizar consultas");
+        jLabel3.setText(" Relatório");
 
         jButton8.setBackground(new java.awt.Color(52, 152, 219));
         jButton8.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Consultar");
+        jButton8.setText("Gerar");
         jButton8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -465,7 +465,7 @@ public class Relatorio extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(voltarBtn)
-                        .addGap(183, 183, 183)
+                        .addGap(239, 239, 239)
                         .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
