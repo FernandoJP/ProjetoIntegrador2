@@ -131,7 +131,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(52, 152, 219));
         jButton8.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(102, 102, 102));
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Criar");
         jButton8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton8.addActionListener(new java.awt.event.ActionListener() {
