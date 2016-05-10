@@ -6,6 +6,10 @@
 package clinica;
 
 import com.sun.xml.internal.ws.util.StringUtils;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -22,9 +26,52 @@ public class Agenda extends javax.swing.JFrame {
     /**
      * Creates new form Prototipo
      */
+    public static void criarTabelas() {
+        Connection c = null;
+        Statement select = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\fernando.jpaula2\\Documents\\TestesSQL\\src\\testessql\\Biblioteca.sqlite");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+
+            select = c.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS MEDICO "
+                    + "(CPF INT PRIMARY KEY,"
+                    + " NOME CHAR(50),"
+                    + " DATA_NASC DATE,"
+                    + " ENDERECO CHAR(50));";
+            select.executeUpdate(sql);
+            sql = "INSERT INTO TESTE(IDADE)VALUES(1234);";
+            select.executeUpdate(sql);
+            c.commit();
+
+            /* código para inserir valores nas tabelas
+            ResultSet rs = select.executeQuery("SELECT * FROM teste;");
+            while (rs.next()) {
+                int id = rs.getInt("ENDERECO");
+                String name = rs.getString("NOME");
+                int age = rs.getInt("IDADE");
+                System.out.println("ID = " + id);
+                System.out.println("NAME = " + name);
+                System.out.println("AGE = " + age);
+                System.out.println();
+            }       
+            rs.close();
+            */
+            select.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Operação feita com sucesso! ");
+    }
+
     public Agenda() {
         initComponents();
         setResizable(false);
+        criarTabelas();
     }
 
     /**
@@ -572,16 +619,21 @@ public class Agenda extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agenda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agenda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agenda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Agenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agenda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

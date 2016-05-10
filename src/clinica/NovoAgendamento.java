@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package clinica;
+import java.sql.*;
 
 /**
  *
@@ -17,6 +18,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
     public NovoAgendamento() {
         initComponents();
         setResizable(false);
+        
     }
 
     /**
