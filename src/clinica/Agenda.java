@@ -31,18 +31,37 @@ public class Agenda extends javax.swing.JFrame {
         Statement select = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\fernando.jpaula2\\Documents\\TestesSQL\\src\\testessql\\Biblioteca.sqlite");
+            c = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\fernando.jpaula2\\Documents\\NetBeansProjects\\JavaApplication12\\src\\clinica\\Clinica.sqlite");
             c.setAutoCommit(false);
             System.out.println("Opened database successfully");
-
             select = c.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS MEDICO "
+            
+            //criação da tabela medico
+            String sql = "CREATE TABLE IF NOT EXISTS MEDICO"
                     + "(CPF INT PRIMARY KEY,"
                     + " NOME CHAR(50),"
                     + " DATA_NASC DATE,"
                     + " ENDERECO CHAR(50));";
             select.executeUpdate(sql);
-            sql = "INSERT INTO TESTE(IDADE)VALUES(1234);";
+
+            //criação da tabela especialidade
+            sql = "CREATE TABLE IF NOT EXISTS ESPECIALIDADE;";
+            select.executeUpdate(sql);
+
+            //criação da tabela status
+            sql = "CREATE TABLE IF NOT EXISTS STATUS;";
+            select.executeUpdate(sql);
+
+            //criação da tabela agendamento
+            sql = "CREATE TABLE IF NOT EXISTS AGENDAMENTO"
+                    + "AGENDAMENTO_ID INT PRIMARY KEY,"
+                    + "(MEDICO_RESP CHAR(50),"
+                    + " STATUS CHAR(50),"
+                    + " OBSERVACOES CHAR(50),"
+                    + " DATA_INICIO DATE(50),"
+                    + " DATA_FIM DATE(50),"
+                    + " SERVICO CHAR(50));";
+
             select.executeUpdate(sql);
             c.commit();
 
@@ -59,6 +78,7 @@ public class Agenda extends javax.swing.JFrame {
              }       
              rs.close();
              */
+            
             select.close();
             c.close();
         } catch (Exception e) {
