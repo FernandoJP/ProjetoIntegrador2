@@ -11,26 +11,29 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
- *
- * @author fernando.jpaula2
+ * Projeto Integrador II - Agendamento Eletrônico
+ * @author Fernando José
  */
+
 public class SQL {
+    
     public static void criarTabelas() {
+        
         Connection c = null;
         Statement select = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\fernando.jpaula2\\Documents\\NetBeansProjects\\JavaApplication1\\src\\clinica\\sql\\Clinica.sqlite");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
             select = c.createStatement();
 
             //criação da tabela medico
             String sql = "CREATE TABLE IF NOT EXISTS MEDICO"
-                    + "(CPF INT PRIMARY KEY,"
-                    + " NOME CHAR(50),"
+                    + "(MEDICO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + " NOME CHAR(255),"
                     + " DATA_NASC DATE,"
-                    + " ENDERECO CHAR(50));";
+                    + " APAGAR CHAR,"
+                    + " ENDERECO CHAR(255));";
             select.executeUpdate(sql);
 
             //criação da tabela especialidade
@@ -43,17 +46,20 @@ public class SQL {
 
             //criação da tabela agendamento
             sql = "CREATE TABLE IF NOT EXISTS AGENDAMENTO"
-                   + "(AGENDAMENTO_ID INT PRIMARY KEY,"
-                    + "MEDICO_RESP CHAR(50),"
-                    + " STATUS CHAR(50),"
-                    + " OBSERVACOES CHAR(50),"
-                    + " DATA_INICIO DATE(50),"
-                    + " DATA_FIM DATE(50),"
-                    + " SERVICO CHAR(50));";
+                   + "(AGENDAMENTO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "MEDICO_RESP CHAR(255),"
+                    + " PACIENTE CHAR(255),"
+                    + " STATUS CHAR(255),"
+                    + " OBSERVACOES CHAR(255),"
+                    + " DATA_INICIO DATE(255),"
+                    + " DATA_FIM DATE(255),"
+                    + " SERVICO CHAR(255));";
 
             select.executeUpdate(sql);
             c.commit();
 
+            select.executeUpdate(sql);
+            c.commit();
             /* código para inserir valores nas tabelas
              ResultSet rs = select.executeQuery("SELECT * FROM teste;");
              while (rs.next()) {
@@ -70,33 +76,46 @@ public class SQL {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método criarTabelas() - "+e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
     }
     
-    public static void setTabela(String tabela, String valor){
+    /*
+        Método responsável por editar dados de uma tabela
+        @param tabela: qual tabela será editada
+        @param codigo: código SQL, deverá conter a instrução INSERT INTO, ex: (n,m)values(1,2)
+    */
+    public static void setTabela(String tabela, String codigo){
         Connection c = null;
         Statement select = null;
         try {
-            ResultSet rs = select.executeQuery("SELECT * FROM "+tabela+";");
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\fernando.jpaula2\\Documents\\NetBeansProjects\\JavaApplication1\\src\\clinica\\sql\\Clinica.sqlite");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
             select = c.createStatement();
-
-            //criação da tabela medico
-            String sql = "INSERT INTO "+tabela+"(";
-            select.executeUpdate(sql);
-  
+            System.out.println("Enviando a seguinte instrução: "+"INSERT INTO "+tabela+"("+ codigo);
+            String sql = "INSERT INTO "+tabela+"("+ codigo;
             select.executeUpdate(sql);
             c.commit();
+            /* código para inserir valores nas tabelas
+             ResultSet rs = select.executeQuery("SELECT * FROM teste;");
+             while (rs.next()) {
+             int id = rs.getInt("ENDERECO");
+             String name = rs.getString("NOME");
+             int age = rs.getInt("IDADE");
+             System.out.println("ID = " + id);
+             System.out.println("NAME = " + name);
+             System.out.println("AGE = " + age);
+             System.out.println();
+             }       
+             rs.close();
+             */
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método criarTabelas() - "+e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
