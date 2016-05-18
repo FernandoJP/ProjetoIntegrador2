@@ -97,6 +97,7 @@ public class SQL {
             select = c.createStatement();
             System.out.println("Enviando a seguinte instrução: "+"INSERT INTO "+tabela+"("+ codigo);
             String sql = "INSERT INTO "+tabela+"("+ codigo;
+            System.out.println("ENVIANDO "+"INSERT INTO "+tabela+"("+ codigo);
             select.executeUpdate(sql);
             c.commit();
             /* código para inserir valores nas tabelas

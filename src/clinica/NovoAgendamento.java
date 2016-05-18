@@ -5,7 +5,10 @@
  */
 package clinica;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Scanner;
 
 /**
  *
@@ -22,19 +25,39 @@ public class NovoAgendamento extends javax.swing.JFrame {
         SQL sql = new SQL();
     }
 
+    private String readFile(String pathname) throws IOException {
+
+        File file = new File(pathname);
+        StringBuilder fileContents = new StringBuilder((int) file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while (scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
+    }
+
     /*
-        Algoritmo executado quando o botão "criar" for clicado
+     Algoritmo executado quando o botão "criar" for clicado
      */
     public void criarAgendamento() {
-        //Envio dos valores digitados pelo usuário para a tabela AGENDAMENTO
-        SQL.setTabela("AGENDAMENTO", "MEDICO_RESP, PACIENTE, DATA_INICIO,DATA_FIM, OBSERVACOES, SERVICO, STATUS)VALUES("+
-                "'"+med_resp_campo.getText()+"'"+", " +
-                "'"+paciente_campo.getText()+"'"+ ", " +
-                "'"+dt_inicio_campo.getText()+"'"+ ", " +"'"+
-                "'"+dt_fim_campo.getText()+"'"+ ", " +
-                "'"+obs_campo.getText()+"'"+ ", " +"'"+ 
-                servico_campo.getText() +"'"+", " +"'"+
-                status_seletor.getSelectedItem()+"'"+ ");");
+        /*
+         Envio dos valores digitados pelo usuário para a tabela AGENDAMENTO
+         setTabela tem dois arguementos: a tabela a ser editada e o script SQL
+         */
+        SQL.setTabela("AGENDAMENTO", "MEDICO_RESP, PACIENTE, DATA_INICIO,DATA_FIM, OBSERVACOES, SERVICO, STATUS)VALUES("
+                + "'" + med_resp_campo.getText()         + "'" + ", "
+                + "'" + paciente_campo.getText()         + "'" + ", "
+                + "'" + dt_inicio_campo.getText()        + "'" + ", "
+                + "'" + dt_fim_campo.getText()           + "'" + ", "
+                + "'" + obs_campo.getText()              + "'" + ", "
+                + "'" + servico_campo.getText()          + "'" + ", "
+                + "'" + status_seletor.getSelectedItem() + "'" + ");");
         //SQL.setTabela("AGENDAMENTO", "(PACIENTE)VALUES('" + paciente_campo.getText() + "');");
     }
 
@@ -68,7 +91,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         med_resp_campo = new javax.swing.JTextField();
         servico_campo = new javax.swing.JTextField();
-        status_seletor = new javax.swing.JComboBox<>();
+        status_seletor = new javax.swing.JComboBox<String>();
         dt_inicio_campo = new javax.swing.JTextField();
         paciente_campo = new javax.swing.JTextField();
         obs_campo = new javax.swing.JTextField();
@@ -230,7 +253,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
             }
         });
 
-        status_seletor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
+        status_seletor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
         status_seletor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 status_seletorActionPerformed(evt);
