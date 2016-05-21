@@ -37,8 +37,41 @@ public class Agenda extends javax.swing.JFrame {
 
         //SQL.getAtributo();
     }
-    public JTable getTabela(){
+
+    public JTable getTabela() {
         return Tabela;
+    }
+
+    public void atualizarJTable() {
+        Connection c = null;
+        Statement select = null;
+        Agenda agenda = new Agenda();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+            c.setAutoCommit(false);
+            select = c.createStatement();
+
+            c.commit();
+            ResultSet rs = select.executeQuery("SELECT * FROM teste;");
+            Agenda.getTabela().setValueAt(new Integer(2), 1, 1);//como Tabela é privado é necessário o método 
+            while (rs.next()) {
+                int id = rs.getInt("ENDERECO");
+                String name = rs.getString("NOME");
+                int age = rs.getInt("IDADE");
+                System.out.println("ID = " + id);
+                System.out.println("NAME = " + name);
+                System.out.println("AGE = " + age);
+                System.out.println();
+            }
+            rs.close();
+            select.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Operação feita com sucesso! ");
     }
 
     @SuppressWarnings("unchecked")
@@ -401,7 +434,7 @@ public class Agenda extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DefaultTableModel model = (DefaultTableModel) Tabela.getModel();
-        model.removeRow(Integer.parseInt(numLinhaCampo.getText()));   
+        model.removeRow(Integer.parseInt(numLinhaCampo.getText()));
         //numLinhaCampo
     }//GEN-LAST:event_jButton2ActionPerformed
 
