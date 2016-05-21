@@ -12,13 +12,17 @@ import java.sql.Statement;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
+ *
  * @author Fernando José
  */
 
+/*
+ Classe responsável por editar valores do arquivo Clinica.sqlite
+ */
 public class SQL {
-    
+
     public static void criarTabelas() {
-        
+
         Connection c = null;
         Statement select = null;
         try {
@@ -39,14 +43,12 @@ public class SQL {
             //criação da tabela especialidade
             //sql = "CREATE TABLE IF NOT EXISTS ESPECIALIDADE;";
             //select.executeUpdate(sql);
-
             //criação da tabela status
             //sql = "CREATE TABLE IF NOT EXISTS STATUS;";
             //select.executeUpdate(sql);
-
             //criação da tabela agendamento
             sql = "CREATE TABLE IF NOT EXISTS AGENDAMENTO"
-                   + "(AGENDAMENTO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "(AGENDAMENTO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "MEDICO_RESP CHAR(255),"
                     + " PACIENTE CHAR(255),"
                     + " STATUS CHAR(255),"
@@ -76,18 +78,18 @@ public class SQL {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no método criarTabelas() - "+e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
     }
-    
+
     /*
-        Método responsável por editar dados de uma tabela
-        @param tabela: qual tabela será editada
-        @param codigo: código SQL, deverá conter a instrução INSERT INTO, ex: (n,m)values(1,2)
-    */
-    public static void setTabela(String tabela, String codigo){
+     Método responsável por editar dados de uma tabela
+     @param tabela: qual tabela será editada
+     @param codigo: código SQL, deverá conter a instrução INSERT INTO, ex: (n,m)values(1,2)
+     */
+    public static void setTabela(String tabela, String codigo) {
         Connection c = null;
         Statement select = null;
         try {
@@ -95,9 +97,9 @@ public class SQL {
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             c.setAutoCommit(false);
             select = c.createStatement();
-            System.out.println("Enviando a seguinte instrução: "+"INSERT INTO "+tabela+"("+ codigo);
-            String sql = "INSERT INTO "+tabela+"("+ codigo;
-            System.out.println("ENVIANDO "+"INSERT INTO "+tabela+"("+ codigo);
+            System.out.println("Enviando a seguinte instrução: " + "INSERT INTO " + tabela + "(" + codigo);
+            String sql = "INSERT INTO " + tabela + "(" + codigo;
+            System.out.println("ENVIANDO " + "INSERT INTO " + tabela + "(" + codigo);
             select.executeUpdate(sql);
             c.commit();
             /* código para inserir valores nas tabelas
@@ -116,9 +118,11 @@ public class SQL {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no método criarTabelas() - "+e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
     }
+
+    
 }
