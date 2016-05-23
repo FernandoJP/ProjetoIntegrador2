@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
@@ -30,19 +31,22 @@ public class Agenda extends javax.swing.JFrame {
     public Agenda() {
         initComponents();
         setResizable(false);
-
         SQL sql = new SQL();
         sql.criarTabelas();
         Tabela.setValueAt(new Integer(2), 1, 1);
-
-        //SQL.getAtributo();
+        sql.getAgendamento(); //Ao criar instância desta classe receber os dados armazenados no arquivo clinica.sqlite para o JTable Tabela
     }
 
     public JTable getTabela() {
         return Tabela;
     }
 
-    public void atualizarJTable() {
+    /*  
+        Método resposável por obter dados vindos da classe SQL e jogar estes dados no JTable
+        Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
+        Contudo o método atualizarJTable() é uma exceção
+    */
+    public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) {
         Connection c = null;
         Statement select = null;
         Agenda agenda = new Agenda();
@@ -53,26 +57,26 @@ public class Agenda extends javax.swing.JFrame {
             select = c.createStatement();
 
             c.commit();
-            ResultSet rs = select.executeQuery("SELECT * FROM teste;");
-            Agenda.getTabela().setValueAt(new Integer(2), 1, 1);//como Tabela é privado é necessário o método 
+            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+            Tabela.setValueAt(new Integer(2), 1, 1);//como Tabela é privado é necessário o método 
             while (rs.next()) {
-                int id = rs.getInt("ENDERECO");
-                String name = rs.getString("NOME");
-                int age = rs.getInt("IDADE");
-                System.out.println("ID = " + id);
-                System.out.println("NAME = " + name);
-                System.out.println("AGE = " + age);
-                System.out.println();
+                Tabela.setValueAt(medicoResp, 1, 1);
+                Tabela.setValueAt(paciente, 1, 1);
+                Tabela.setValueAt(status, 1, 1);
+                Tabela.setValueAt(observacoes, 1, 1);
+                Tabela.setValueAt(dataInicio, 1, 1);
+                Tabela.setValueAt(dataFim, 1, 1);
             }
             rs.close();
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método atualizarJTable() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -97,12 +101,9 @@ public class Agenda extends javax.swing.JFrame {
         novoAgendBtn = new javax.swing.JButton();
         relatorioBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel6 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        numLinhaCampo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
+        relatorioBtn1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -208,6 +209,7 @@ public class Agenda extends javax.swing.JFrame {
         novoAgendBtn.setBackground(new java.awt.Color(228, 238, 238));
         novoAgendBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         novoAgendBtn.setForeground(new java.awt.Color(102, 102, 102));
+        novoAgendBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/novo-agendamento-icon.png"))); // NOI18N
         novoAgendBtn.setText("Novo agendamento");
         novoAgendBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         novoAgendBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -219,6 +221,7 @@ public class Agenda extends javax.swing.JFrame {
         relatorioBtn.setBackground(new java.awt.Color(228, 238, 238));
         relatorioBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         relatorioBtn.setForeground(new java.awt.Color(102, 102, 102));
+        relatorioBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/relatorios-icon.png"))); // NOI18N
         relatorioBtn.setText("Gerar relatório");
         relatorioBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         relatorioBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -226,51 +229,6 @@ public class Agenda extends javax.swing.JFrame {
                 relatorioBtnActionPerformed(evt);
             }
         });
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel9.setText("Linha:");
-
-        numLinhaCampo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        numLinhaCampo.setForeground(new java.awt.Color(0, 153, 153));
-        numLinhaCampo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numLinhaCampoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(numLinhaCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(numLinhaCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap())
-        );
 
         Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -341,6 +299,18 @@ public class Agenda extends javax.swing.JFrame {
         Tabela.setToolTipText("");
         jScrollPane1.setViewportView(Tabela);
 
+        relatorioBtn1.setBackground(new java.awt.Color(228, 238, 238));
+        relatorioBtn1.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        relatorioBtn1.setForeground(new java.awt.Color(102, 102, 102));
+        relatorioBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
+        relatorioBtn1.setText("Remover Linha");
+        relatorioBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        relatorioBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                relatorioBtn1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -358,21 +328,22 @@ public class Agenda extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(novoAgendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(158, Short.MAX_VALUE))
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(30, 30, 30)
+                                            .addComponent(novoAgendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(29, 29, 29)
+                                            .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(relatorioBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,20 +352,18 @@ public class Agenda extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(novoAgendBtn)
-                            .addComponent(relatorioBtn))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel44))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(novoAgendBtn)
+                    .addComponent(relatorioBtn)
+                    .addComponent(relatorioBtn1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
+                .addComponent(jLabel44)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -404,7 +373,7 @@ public class Agenda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1267, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,15 +401,21 @@ public class Agenda extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_relatorioBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void relatorioBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtn1ActionPerformed
+        //algoritmo para remover a linha selecionada na tabela ao clicar no botão de remoção
         DefaultTableModel model = (DefaultTableModel) Tabela.getModel();
-        model.removeRow(Integer.parseInt(numLinhaCampo.getText()));
-        //numLinhaCampo
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void numLinhaCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numLinhaCampoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_numLinhaCampoActionPerformed
+        int[] rows = Tabela.getSelectedRows();
+        TableModel tm = Tabela.getModel();
+        while (rows.length > 0) {
+            ((DefaultTableModel) tm).removeRow(Tabela.convertRowIndexToModel(rows[0]));
+            rows = Tabela.getSelectedRows();
+        }
+        Tabela.clearSelection();
+        for (int row : rows) {
+            model.removeRow(Tabela.convertRowIndexToModel(row));
+        }
+        Tabela.clearSelection();
+    }//GEN-LAST:event_relatorioBtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -612,7 +587,6 @@ public class Agenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabela;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -623,17 +597,15 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton novoAgendBtn;
-    private javax.swing.JTextField numLinhaCampo;
     private javax.swing.JButton relatorioBtn;
+    private javax.swing.JButton relatorioBtn1;
     // End of variables declaration//GEN-END:variables
 }

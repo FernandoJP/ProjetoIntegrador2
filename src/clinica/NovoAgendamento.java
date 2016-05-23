@@ -23,7 +23,6 @@ public class NovoAgendamento extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
-        SQL.atualizarJTable(); //Ao criar instância desta classe receber os dados armazenados no arquivo clinica.sqlite para o JTable Tabela
     }
     
     /*
@@ -390,7 +389,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

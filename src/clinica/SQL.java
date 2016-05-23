@@ -54,8 +54,7 @@ public class SQL {
                     + " STATUS CHAR(255),"
                     + " OBSERVACOES CHAR(255),"
                     + " DATA_INICIO DATE(255),"
-                    + " DATA_FIM DATE(255),"
-                    + " SERVICO CHAR(255));";
+                    + " DATA_FIM DATE(255));";
 
             select.executeUpdate(sql);
             c.commit();
@@ -124,5 +123,42 @@ public class SQL {
         System.out.println("Operação feita com sucesso! ");
     }
 
-    
+    /*
+        método responsável por pegar valores da tabela AGENDAMENTO
+        Envio desses valores para o método atualizarJTable, que irá jogar os valores no JTable
+    */
+    public void getAgendamento() {
+        System.out.println("Atualizando JTable...");
+        Connection c = null;
+        Statement select = null;
+        Agenda agenda = new Agenda();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+            c.setAutoCommit(false);
+            select = c.createStatement();
+            c.commit();
+
+            //código para inserir valores nas tabelas
+            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+            while (rs.next()) {
+                String medicoResp = rs.getString("MEDICO_RESP");
+                String paciente = rs.getString("PACIENTE");
+                String status = rs.getString("STATUS");
+                String observacoes = rs.getString("OBSERVACOES");
+                String dataInicio = rs.getString("DATA_INICIO");
+                String dataFim = rs.getString("DATA_FIM");
+                Agenda.atualizarJTable(medicoResp, paciente, status, observacoes, dataInicio, dataFim);
+                System.out.println(medicoResp +paciente+status+observacoes+dataInicio+dataFim);
+            }
+            rs.close();
+            select.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println("Erro no método atualizarJTable() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Operação feita com sucesso! ");
+    }
+
 }
