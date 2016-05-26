@@ -8,7 +8,9 @@ package clinica;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
@@ -20,7 +22,7 @@ import java.sql.Statement;
  Classe responsável por editar valores do arquivo Clinica.sqlite
  */
 public class SQL {
-
+    
     public static void criarTabelas() {
 
         Connection c = null;
@@ -124,14 +126,14 @@ public class SQL {
     }
 
     /*
-        método responsável por pegar valores da tabela AGENDAMENTO
-        Envio desses valores para o método atualizarJTable, que irá jogar os valores no JTable
-    */
+     método responsável por pegar valores da tabela AGENDAMENTO
+     Envio desses valores para o método atualizarJTable, que irá jogar os valores no JTable
+     */
     public void getAgendamento() {
         System.out.println("Atualizando JTable...");
         Connection c = null;
         Statement select = null;
-        Agenda agenda = new Agenda();
+     //   Agenda agd = new Agenda();
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
@@ -148,8 +150,8 @@ public class SQL {
                 String observacoes = rs.getString("OBSERVACOES");
                 String dataInicio = rs.getString("DATA_INICIO");
                 String dataFim = rs.getString("DATA_FIM");
-                Agenda.atualizarJTable(medicoResp, paciente, status, observacoes, dataInicio, dataFim);
-                System.out.println(medicoResp +paciente+status+observacoes+dataInicio+dataFim);
+                //agd.atualizarJTable(medicoResp, paciente, status, observacoes, dataInicio, dataFim);
+                System.out.println(medicoResp + paciente + status + observacoes + dataInicio + dataFim);
             }
             rs.close();
             select.close();
@@ -159,6 +161,33 @@ public class SQL {
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
+    }
+    
+    public ArrayList<Object> retornaDados() throws SQLException, ClassNotFoundException{
+    ArrayList<Object> elements = new ArrayList<>();
+        
+    System.out.println("Atualizando JTable...");
+        Connection c = null;
+        Statement select = null;
+        //Agenda agd = new Agenda();
+
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+            c.setAutoCommit(false);
+            select = c.createStatement();
+            //c.commit();
+            
+            
+
+            //código para inserir valores nas tabelas
+            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+            while (rs.next()) {
+                elements.add(rs.getString("MEDICO_RESP"));
+            }
+            select.close();
+            c.close();
+            return elements;
+
     }
 
 }

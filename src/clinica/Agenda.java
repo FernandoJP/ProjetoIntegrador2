@@ -28,13 +28,18 @@ import javax.swing.table.TableModel;
  */
 public class Agenda extends javax.swing.JFrame {
 
-    public Agenda() {
+    public Agenda() throws SQLException, ClassNotFoundException {
         initComponents();
         setResizable(false);
-        SQL sql = new SQL();
-        sql.criarTabelas();
-        Tabela.setValueAt(new Integer(2), 1, 1);
-        sql.getAgendamento(); //Ao criar instância desta classe receber os dados armazenados no arquivo clinica.sqlite para o JTable Tabela
+        SQL sq = new SQL();
+        
+        
+ 
+
+            Tabela.setValueAt(sq.retornaDados().get(2),0 ,0);
+ 
+        
+        
     }
 
     public JTable getTabela() {
@@ -42,10 +47,11 @@ public class Agenda extends javax.swing.JFrame {
     }
 
     /*  
-        Método resposável por obter dados vindos da classe SQL e jogar estes dados no JTable
-        Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
-        Contudo o método atualizarJTable() é uma exceção
-    */
+     Método resposável por obter dados vindos da classe SQL e jogar estes dados no JTable
+     Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
+     Contudo o método atualizarJTable() é uma exceção
+     */
+    /*
     public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) {
         Connection c = null;
         Statement select = null;
@@ -59,25 +65,29 @@ public class Agenda extends javax.swing.JFrame {
             c.commit();
             ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
             Tabela.setValueAt(new Integer(2), 1, 1);//como Tabela é privado é necessário o método 
-            while (rs.next()) {
-                Tabela.setValueAt(medicoResp, 1, 1);
-                Tabela.setValueAt(paciente, 1, 1);
-                Tabela.setValueAt(status, 1, 1);
-                Tabela.setValueAt(observacoes, 1, 1);
-                Tabela.setValueAt(dataInicio, 1, 1);
-                Tabela.setValueAt(dataFim, 1, 1);
+            for (int i = 0; i < 50; i++) { //50 pois é o número máx de linhas
+                
+                while (rs.next()) {
+                    
+                    Tabela.setValueAt(medicoResp, i, 0);
+                    Tabela.setValueAt(paciente, i, 1);
+                    Tabela.setValueAt(status, i, 2);
+                    Tabela.setValueAt(observacoes, i, 3);
+                    Tabela.setValueAt(dataInicio, i, 4);
+                    Tabela.setValueAt(dataFim, i, 5);
+                    Tabela.setValueAt("blablabla", 1, 5);
+                }
+                //rs.close();
+                //select.close();
+                c.close();
             }
-            rs.close();
-            select.close();
-            c.close();
         } catch (Exception e) {
             System.err.println("Erro no método atualizarJTable() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
     }
-    
-
+*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -232,9 +242,9 @@ public class Agenda extends javax.swing.JFrame {
 
         Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Médico 1", "Paciente 1", "Obs", null, null, null},
-                {"Médico 2", "Paciente 2", "Obs", null, null, null},
-                {"Médico 3", "Paciente 3", "Obs", null, null, null},
+                {"", "", "", null, null, null},
+                {"", "", "", null, null, null},
+                {"", "", "", null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -421,7 +431,9 @@ public class Agenda extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        SQL sql = new SQL();
+        sql.criarTabelas();
+        sql.getAgendamento(); //Ao criar instância desta classe receber os dados armazenados no arquivo clinica.sqlite para o JTable Tabela
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -580,10 +592,18 @@ public class Agenda extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Agenda().setVisible(true);
+                try {
+                    new Agenda().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabela;
     private javax.swing.JButton jButton1;

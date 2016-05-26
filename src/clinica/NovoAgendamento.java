@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -389,7 +390,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -416,6 +417,10 @@ public class NovoAgendamento extends javax.swing.JFrame {
 
     private void criar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criar_btnActionPerformed
         criarAgendamento();
+        JOptionPane.showMessageDialog(null, "Novo agendamento foi criado com sucesso! clique em OK para ver a agenda.", "Agendamento criado", JOptionPane.PLAIN_MESSAGE);
+        new Agenda().setVisible(true);
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_criar_btnActionPerformed
 
     private void voltarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtnActionPerformed
