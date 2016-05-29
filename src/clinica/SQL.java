@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clinica;
 
 import java.sql.Connection;
@@ -22,15 +17,15 @@ import java.util.ArrayList;
  Classe responsável por editar valores do arquivo Clinica.sqlite
  */
 public class SQL {
-    
-    public static void criarTabelas() {
 
-        Connection c = null;
-        Statement select = null;
+    //variáveis globais usadas em todas as funções desta classe
+    static Connection c = null;
+    static Statement select = null;
+
+    public static void criarTabelas() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            c.setAutoCommit(false);
             select = c.createStatement();
 
             //criação da tabela medico
@@ -59,10 +54,6 @@ public class SQL {
                     + " DATA_FIM DATE(255));";
 
             select.executeUpdate(sql);
-            c.commit();
-
-            select.executeUpdate(sql);
-            c.commit();
             /* código para inserir valores nas tabelas
              ResultSet rs = select.executeQuery("SELECT * FROM teste;");
              while (rs.next()) {
@@ -91,31 +82,14 @@ public class SQL {
      @param codigo: código SQL, deverá conter a instrução INSERT INTO, ex: (n,m)values(1,2)
      */
     public static void setTabela(String tabela, String codigo) {
-        Connection c = null;
-        Statement select = null;
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            c.setAutoCommit(false);
             select = c.createStatement();
             System.out.println("Enviando a seguinte instrução: " + "INSERT INTO " + tabela + "(" + codigo);
             String sql = "INSERT INTO " + tabela + "(" + codigo;
             System.out.println("ENVIANDO " + "INSERT INTO " + tabela + "(" + codigo);
             select.executeUpdate(sql);
-            c.commit();
-            /* código para inserir valores nas tabelas
-             ResultSet rs = select.executeQuery("SELECT * FROM teste;");
-             while (rs.next()) {
-             int id = rs.getInt("ENDERECO");
-             String name = rs.getString("NOME");
-             int age = rs.getInt("IDADE");
-             System.out.println("ID = " + id);
-             System.out.println("NAME = " + name);
-             System.out.println("AGE = " + age);
-             System.out.println();
-             }       
-             rs.close();
-             */
             select.close();
             c.close();
         } catch (Exception e) {
@@ -126,68 +100,79 @@ public class SQL {
     }
 
     /*
-     método responsável por pegar valores da tabela AGENDAMENTO
-     Envio desses valores para o método atualizarJTable, que irá jogar os valores no JTable
+     método responsável por obter dados da tabela AGENDAMENTO
+     @return vetor de ArrayLists, cada índice do vetor tem um ArrayList com uma coluna
      */
-    public void getAgendamento() {
-        System.out.println("Atualizando JTable...");
-        Connection c = null;
-        Statement select = null;
-     //   Agenda agd = new Agenda();
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            c.setAutoCommit(false);
-            select = c.createStatement();
-            c.commit();
+    public ArrayList[] retornarDados() throws SQLException, ClassNotFoundException {
+        //NÃO REUTILIZAR COLUNA ....... POIS CLEAR N FUNCIONA
+        //um ArrayList representa uma coluna do BD, ex: coluna PACIENTE. Tem que ser ArrayList pois não sabemos a qtd de elementos
+        ArrayList<String> coluna = new ArrayList<>();
+        //vetor com ArrayLists com as 7 colunas, o vetor irá conter todos os dados da tabela AGENDAMENTO. 
+        ArrayList[] colunas = new ArrayList[7];
 
-            //código para inserir valores nas tabelas
-            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            while (rs.next()) {
-                String medicoResp = rs.getString("MEDICO_RESP");
-                String paciente = rs.getString("PACIENTE");
-                String status = rs.getString("STATUS");
-                String observacoes = rs.getString("OBSERVACOES");
-                String dataInicio = rs.getString("DATA_INICIO");
-                String dataFim = rs.getString("DATA_FIM");
-                //agd.atualizarJTable(medicoResp, paciente, status, observacoes, dataInicio, dataFim);
-                System.out.println(medicoResp + paciente + status + observacoes + dataInicio + dataFim);
-            }
-            rs.close();
-            select.close();
-            c.close();
-        } catch (Exception e) {
-            System.err.println("Erro no método atualizarJTable() - " + e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+        select = c.createStatement();
+
+        ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("MEDICO_RESP"));
         }
-        System.out.println("Operação feita com sucesso! ");
-    }
-    
-    public ArrayList<Object> retornaDados() throws SQLException, ClassNotFoundException{
-    ArrayList<Object> elements = new ArrayList<>();
+        colunas[0] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
+        coluna.removeAll(coluna);
+        // coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
+
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("PACIENTE"));
+        }
+        colunas[1] = coluna; //armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna PACIENTE)
+        coluna.removeAll(coluna);
+//coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
+        /*
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("STATUS"));
+        } 
+        colunas[2] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna STATUS)
+        coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
         
-    System.out.println("Atualizando JTable...");
-        Connection c = null;
-        Statement select = null;
-        //Agenda agd = new Agenda();
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("OBSERVACOES"));
+        }     
+        colunas[3] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna OBSERVACOES)
+        coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
+        
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("DATA_INICIO"));
+        }      
+        colunas[4] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna DATA_INICIO)
+        coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
+        
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("DATA_FIM"));
+        }
+        colunas[5] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna DATA_FIM)
+        coluna.clear();//limpar a coluna para reutilizá-la
+        select.close();//para cada loop precisa fechar o select
+        
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            coluna.add(rs.getString("SERVICO"));
+        }
+        colunas[6] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna SERVICO)
+        select.close();
+         */
+        c.close();
 
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            c.setAutoCommit(false);
-            select = c.createStatement();
-            //c.commit();
-            
-            
-
-            //código para inserir valores nas tabelas
-            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            while (rs.next()) {
-                elements.add(rs.getString("MEDICO_RESP"));
-            }
-            select.close();
-            c.close();
-            return elements;
-
+        return colunas;
     }
-
 }
