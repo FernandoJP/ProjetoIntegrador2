@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+import sun.security.rsa.RSACore;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
@@ -33,9 +34,11 @@ public class SQL {
      */
     public static String txtParaString(String caminho) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(caminho));
-            return scanner.useDelimiter("\\A").next();
+        String text = scanner.useDelimiter("\\A").next();
+        //scanner.close();
+            return text;
     }
-
+/*
     public static String readFile(String caminho) throws IOException {
 
         File txt = new File(caminho);
@@ -51,14 +54,15 @@ public class SQL {
             scanner.close();
         }
     }
-
+*/
     public static void criarTabelas() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             select = c.createStatement();
+            System.out.println(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
             select.executeUpdate(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
-            System.out.println(readFile("src\\clinica\\sql\\Clinica_DML.txt"));
+            //System.out.println(txtParaString("src\\clinica\\sql\\Clinica_DML.txt"));
 
             select.close();
             c.close();
@@ -165,6 +169,7 @@ public class SQL {
         colunas[6] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna SERVICO)
         select.close();
          */
+
         c.close();
 
         return colunas;

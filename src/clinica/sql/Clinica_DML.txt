@@ -49,3 +49,5 @@ insert into paciente(nome_paciente, idade)values('Maria Suvaqueira da Suaman', 6
 insert into paciente(nome_paciente, idade)values('Hélder Frederica Couto', 25);
 insert into paciente(nome_paciente, idade)values('Tomásia Zulmira Temes', 26);
 insert into paciente(nome_paciente, idade)values('Carla Dorindo Maranhão', 34);
+
+
