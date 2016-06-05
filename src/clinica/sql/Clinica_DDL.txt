@@ -1,0 +1,58 @@
+--Habilita o uso de foreign keys
+PRAGMA foreign_keys = ON;
+
+drop table if exists especialidade;
+drop table if exists medico;
+drop table if exists agendamento;
+drop table if exists unidade;
+drop table if exists status;
+drop table if exists paciente;
+
+
+create table especialidade(
+	especialidade_id integer not null,
+	nome_especialidade varchar(50) not null,
+	primary key(especialidade_id)
+
+);
+create table medico(
+	medico_id integer not null,
+	nome_medico varchar(50) not null,
+	unidade varchar(50) not null,
+	especialidade varchar(50) not null,
+	primary key(medico_id),
+	foreign key(unidade) references unidade(unidade),
+	foreign key(especialidade) references especialidade(especialidade)
+);
+
+create table agendamento(
+	agendamento_id integer not null,
+	observacoes varchar(255),
+	data_inicio date not null,
+	data_fim date not null,
+	medico_responsavel varchar(50) not null,
+	status varchar(50) not null,
+	primary key(agendamento_id),
+	foreign key(medico_responsavel) references medico(nome),
+	foreign key(status) references status(status)
+);
+
+create table unidade(
+	unidade_id integer not null,
+	nome_unidade varchar(50) not null,
+	endereco varchar(255) not null,
+	primary key(unidade_id)
+);
+
+create table status(
+	status_id integer not null,
+	nome_status varchar(50) not null,
+	primary key(status_id)
+);
+
+create table paciente(
+	paciente_id integer not null,
+	nome_paciente varchar(50) not null,
+	idade integer,
+	primary key(paciente_id)
+);

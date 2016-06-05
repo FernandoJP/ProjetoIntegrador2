@@ -9,3 +9,8 @@ Abrir outra tela e fechar a atual
 new Agenda().setVisible(true); 
 setVisible(false);
 dispose();
+
+Txt para String:
+Scanner scanner = new Scanner( new File("poem.txt") );
+String text = scanner.useDelimiter("\\A").next();
+scanner.close() // Put this call in a finally block

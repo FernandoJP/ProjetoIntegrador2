@@ -1,11 +1,15 @@
 package clinica;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
@@ -22,51 +26,40 @@ public class SQL {
     static Connection c = null;
     static Statement select = null;
 
+    /*
+        Método responsável por converter um arquivo TXT especificado via parâmetro para String
+        @param caminho - onde o arquivo TXT está
+        @return - string com os dados do TXT
+     */
+    public static String txtParaString(String caminho) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(caminho));
+            return scanner.useDelimiter("\\A").next();
+    }
+
+    public static String readFile(String caminho) throws IOException {
+
+        File txt = new File(caminho);
+        StringBuilder fileContents = new StringBuilder((int) txt.length());
+        Scanner scanner = new Scanner(txt);
+        String lineSeparator = System.getProperty("line.separator");
+        try {
+            while (scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString() + "bosta";
+        } finally {
+            scanner.close();
+        }
+    }
+
     public static void criarTabelas() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             select = c.createStatement();
+            select.executeUpdate(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
+            System.out.println(readFile("src\\clinica\\sql\\Clinica_DML.txt"));
 
-            //criação da tabela medico
-            String sql = "CREATE TABLE IF NOT EXISTS MEDICO"
-                    + "(MEDICO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + " NOME CHAR(255),"
-                    + " DATA_NASC DATE,"
-                    + " APAGAR CHAR,"
-                    + " ENDERECO CHAR(255));";
-            select.executeUpdate(sql);
-
-            //criação da tabela especialidade
-            //sql = "CREATE TABLE IF NOT EXISTS ESPECIALIDADE;";
-            //select.executeUpdate(sql);
-            //criação da tabela status
-            //sql = "CREATE TABLE IF NOT EXISTS STATUS;";
-            //select.executeUpdate(sql);
-            //criação da tabela agendamento
-            sql = "CREATE TABLE IF NOT EXISTS AGENDAMENTO"
-                    + "(AGENDAMENTO_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "MEDICO_RESP CHAR(255),"
-                    + " PACIENTE CHAR(255),"
-                    + " STATUS CHAR(255),"
-                    + " OBSERVACOES CHAR(255),"
-                    + " DATA_INICIO DATE(255),"
-                    + " DATA_FIM DATE(255));";
-
-            select.executeUpdate(sql);
-            /* código para inserir valores nas tabelas
-             ResultSet rs = select.executeQuery("SELECT * FROM teste;");
-             while (rs.next()) {
-             int id = rs.getInt("ENDERECO");
-             String name = rs.getString("NOME");
-             int age = rs.getInt("IDADE");
-             System.out.println("ID = " + id);
-             System.out.println("NAME = " + name);
-             System.out.println("AGE = " + age);
-             System.out.println();
-             }       
-             rs.close();
-             */
             select.close();
             c.close();
         } catch (Exception e) {
@@ -93,7 +86,7 @@ public class SQL {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método setTabela() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         System.out.println("Operação feita com sucesso! ");
@@ -106,7 +99,12 @@ public class SQL {
     public ArrayList[] retornarDados() throws SQLException, ClassNotFoundException {
         //NÃO REUTILIZAR COLUNA ....... POIS CLEAR N FUNCIONA
         //um ArrayList representa uma coluna do BD, ex: coluna PACIENTE. Tem que ser ArrayList pois não sabemos a qtd de elementos
-        ArrayList<String> coluna = new ArrayList<>();
+        ArrayList<String> especialidade = new ArrayList<>();
+        ArrayList<String> medico = new ArrayList<>();
+        ArrayList<String> agendamento = new ArrayList<>();
+        ArrayList<String> unidade = new ArrayList<>();
+        ArrayList<String> status = new ArrayList<>();
+        ArrayList<String> paciente = new ArrayList<>();
         //vetor com ArrayLists com as 7 colunas, o vetor irá conter todos os dados da tabela AGENDAMENTO. 
         ArrayList[] colunas = new ArrayList[7];
 
@@ -114,22 +112,18 @@ public class SQL {
         c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
         select = c.createStatement();
 
-        ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        ResultSet rs = select.executeQuery("SELECT * FROM MEDICO;");
         while (rs.next()) {
-            coluna.add(rs.getString("MEDICO_RESP"));
+            medico.add(rs.getString("NOME"));
         }
-        colunas[0] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
-        coluna.removeAll(coluna);
-        // coluna.clear();//limpar a coluna para reutilizá-la
+        colunas[0] = medico;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
         select.close();//para cada loop precisa fechar o select
 
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
-            coluna.add(rs.getString("PACIENTE"));
+            agendamento.add(rs.getString("AGENDAMENTO_ID"));
         }
-        colunas[1] = coluna; //armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna PACIENTE)
-        coluna.removeAll(coluna);
-//coluna.clear();//limpar a coluna para reutilizá-la
+        colunas[1] = agendamento; //armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna PACIENTE)
         select.close();//para cada loop precisa fechar o select
         /*
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");

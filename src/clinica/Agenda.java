@@ -24,6 +24,7 @@ import javax.swing.table.TableModel;
  */
 public class Agenda extends javax.swing.JFrame {
 
+    //arrumar pois agenda() não pode fazer tudo
     public Agenda() throws SQLException, ClassNotFoundException {
         Connection c = null;
         Statement select = null;
@@ -43,7 +44,6 @@ public class Agenda extends javax.swing.JFrame {
             //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
             //a função retornarDados retorna um arrayList
             //get(cont) = função do arrayList que permite obter valores do array
-            
             while (rs.next()) {
                 Tabela.setValueAt(sql.retornarDados()[0].get(0), 0, 0);
                 Tabela.setValueAt(sql.retornarDados()[1].get(3), 0, 1);

@@ -1,0 +1,51 @@
+--Inserção de especialidades
+insert into especialidade(nome_especialidade)values('Cirurgia Refrativa');
+insert into especialidade(nome_especialidade)values('Oftalmopediatria');
+insert into especialidade(nome_especialidade)values('Oncologia Ocular');
+insert into especialidade(nome_especialidade)values('Neuro-oftalmologia');
+insert into especialidade(nome_especialidade)values('Visão Subnormal');
+
+--Inserção de medicos 
+insert into  medico(nome_medico, unidade, especialidade)values('Eraldonclóbes Souza', 'Santo Amaro', 'Cirurgia Refrativa');
+insert into  medico(nome_medico, unidade, especialidade)values('Deuzivaldo Ferreira', 'Vila Olímpia', 'Oncologia Ocular');
+insert into  medico(nome_medico, unidade, especialidade)values('Carabino Tiro Certo', 'Vila Olímpia', 'Cirurgia Refrativa');
+insert into  medico(nome_medico, unidade, especialidade)values('Adegesto Pataca', 'Vila Olímpia', 'Oncologia Ocular');
+insert into  medico(nome_medico, unidade, especialidade)values('Antonio Camisão', 'Santo Amaro', 'Cirurgia Refrativa');
+insert into  medico(nome_medico, unidade, especialidade)values('Brizabela Alves', 'Santo Amaro', 'Oftalmopediatria');
+insert into  medico(nome_medico, unidade, especialidade)values('Daniel Dperet Antunes', 'Itaim Bibi', 'Neuro-oftalmologia');
+insert into  medico(nome_medico, unidade, especialidade)values('Godofredo Felisbino Rosa', 'Santo Amaro', 'Neuro-oftalmologia');
+insert into  medico(nome_medico, unidade, especialidade)values('Euliclênssio Babozo', 'Itaim Bibi', 'Visão Subnormal');
+insert into  medico(nome_medico, unidade, especialidade)values('Meidinusa Soares', 'Santo Amaro', 'Oncologia Ocular');
+
+--inserção de unidades
+insert into unidade(nome_unidade, endereco)values('Santo Amaro','Av. Santo Amaro, 255 São Paulo SP');
+insert into unidade(nome_unidade, endereco)values('Vila Olímpia','Rua Casa do Ator 320 São Paulo SP');
+insert into unidade(nome_unidade, endereco)values('Itaim Bibi','Rua Joaquim Floriano, 1010 São Paulo SP');
+
+--inserção de status
+insert into status(nome_status)values('Não compareceu');
+insert into status(nome_status)values('Cancelado');
+insert into status(nome_status)values('Lista de espera');
+insert into status(nome_status)values('Concluído');
+
+--inserção de pacientes
+insert into paciente(nome_paciente, idade)values('Eliseu Elsa Toscano', 25);
+insert into paciente(nome_paciente, idade)values('Beatriz Vivaldo Angelim', 35);
+insert into paciente(nome_paciente, idade)values('Lucas Santos Silva', 18);
+insert into paciente(nome_paciente, idade)values('Leopoldina Deolindo Aires', 5);
+insert into paciente(nome_paciente, idade)values('Abel Miriam Marcondes', 52);
+insert into paciente(nome_paciente, idade)values('Napoleão Iolanda Letras', 89);
+insert into paciente(nome_paciente, idade)values('Rafael Cleusa Teves', 63);
+insert into paciente(nome_paciente, idade)values('Ismael Catarino Aires', 25);
+insert into paciente(nome_paciente, idade)values('Almerinda Xerxes Gravato', 26);
+insert into paciente(nome_paciente, idade)values('Vanda Ifigénia Filipe', 34);
+insert into paciente(nome_paciente, idade)values('Alberta Ester Assunção', 25);
+insert into paciente(nome_paciente, idade)values('Dionísio Ângela Holanda', 35);
+insert into paciente(nome_paciente, idade)values('Márcia Oriana Mota', 18);
+insert into paciente(nome_paciente, idade)values('Anind Godo Eanes', 5);
+insert into paciente(nome_paciente, idade)values('Brás Lília Gago', 52);
+insert into paciente(nome_paciente, idade)values('Ilma Gabriela Moutinho', 89);
+insert into paciente(nome_paciente, idade)values('Maria Suvaqueira da Suaman', 63);
+insert into paciente(nome_paciente, idade)values('Hélder Frederica Couto', 25);
+insert into paciente(nome_paciente, idade)values('Tomásia Zulmira Temes', 26);
+insert into paciente(nome_paciente, idade)values('Carla Dorindo Maranhão', 34);
