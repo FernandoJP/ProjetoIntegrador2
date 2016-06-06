@@ -14,23 +14,27 @@ import javax.swing.JOptionPane;
  */
 public class NovoAgendamento extends javax.swing.JFrame {
 
-    String[] medicos = { //tem que ser global
-    };
+    SQL sql = new SQL();
+    
+    String[] medicos = new String[1];  
+    medicos[0] = "Fernando";
+    
     static Connection c = null;
     static Statement select = null;
-    
+
     /**
      * Creates new form Prototipo
      */
-    public NovoAgendamento() {
+    public NovoAgendamento() throws SQLException, ClassNotFoundException {
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
         modificarJComboBox();
-        
+        Agenda agenda = new Agenda();
+        agenda.getTabela().getModel().getValueAt(1, 1);
     }
-    
-    public void modificarJComboBox(){
+
+    public void modificarJComboBox() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
@@ -38,7 +42,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
 
             //código para inserir valores nas tabelas
             ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            
+
             //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
             //a função retornarDados retorna um arrayList
             //get(cont) = função do arrayList que permite obter valores do array
@@ -52,7 +56,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
                 cont++;
             }
-            
+
             rs.close();
             select.close();
             c.close();
@@ -64,8 +68,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         System.out.println(
                 "Operação feita com sucesso! ");
     }
-    }
-    
+
     /*
      Algoritmo executado quando o botão "criar" for clicado
      */
@@ -287,7 +290,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
 
         medico_resp_campo.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         medico_resp_campo.setForeground(new java.awt.Color(102, 102, 102));
-        medico_resp_campo.setModel(new javax.swing.DefaultComboBoxModel(patternExamples));
+        medico_resp_campo.setModel(new javax.swing.DefaultComboBoxModel(medicos));
         medico_resp_campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 medico_resp_campoActionPerformed(evt);
@@ -428,10 +431,13 @@ public class NovoAgendamento extends javax.swing.JFrame {
         //abrir JFrame Agenda
         try {
             new Agenda().setVisible(true);
+
         } catch (SQLException ex) {
-            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         setVisible(false);
         dispose();
@@ -441,10 +447,13 @@ public class NovoAgendamento extends javax.swing.JFrame {
         //abrir JFrame Agenda
         try {
             new Agenda().setVisible(true);
+
         } catch (SQLException ex) {
-            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         setVisible(false);
         dispose();
@@ -484,16 +493,21 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NovoAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NovoAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NovoAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NovoAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoAgendamento.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */

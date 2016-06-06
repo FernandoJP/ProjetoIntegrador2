@@ -1,5 +1,9 @@
 package clinica;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Projeto Integrador II - Agendamento Eletrônico
  * @author Fernando José
@@ -388,7 +392,13 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void voltarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtnActionPerformed
-        new Agenda().setVisible(true);
+        try {
+            new Agenda().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_voltarBtnActionPerformed

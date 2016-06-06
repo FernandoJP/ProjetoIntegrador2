@@ -427,7 +427,13 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void novoAgendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAgendBtnActionPerformed
-        new NovoAgendamento().setVisible(true);
+        try {
+            new NovoAgendamento().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_novoAgendBtnActionPerformed
