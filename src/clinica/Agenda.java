@@ -19,7 +19,6 @@ import javax.swing.table.TableModel;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
- *
  * @author Fernando José
  */
 public class Agenda extends javax.swing.JFrame {
@@ -44,14 +43,14 @@ public class Agenda extends javax.swing.JFrame {
             //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
             //a função retornarDados retorna um arrayList
             //get(cont) = função do arrayList que permite obter valores do array
+            //Estrutura do retorno de retornarDados(): Array = [ArrayList medicoResp, ArrayList Paciente, ArrayList dataInicio, ArrayList dataFim, ArrayList status]
             while (rs.next()) {
-                Tabela.setValueAt(sql.retornarDados()[0].get(0), 0, 0);
-                Tabela.setValueAt(sql.retornarDados()[1].get(3), 0, 1);
-                //Tabela.setValueAt(sql.retornarDados()[2].get(cont), 2, cont);
-                //Tabela.setValueAt(sql.retornarDados()[3].get(cont), 3, cont);
-                //Tabela.setValueAt(sql.retornarDados()[4].get(cont), 4, cont);
-                //Tabela.setValueAt(sql.retornarDados()[5].get(cont), 5, cont);
-                //Tabela.setValueAt(sql.retornarDados()[6].get(cont), 6, cont);
+                Tabela.setValueAt(sql.retornarDados()[0].get(cont), cont, 0);
+                Tabela.setValueAt(sql.retornarDados()[1].get(cont), cont, 1);
+                Tabela.setValueAt(sql.retornarDados()[2].get(cont), cont, 2);
+                Tabela.setValueAt(sql.retornarDados()[3].get(cont), cont, 3);
+                Tabela.setValueAt(sql.retornarDados()[4].get(cont), cont, 4);
+                Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
                 cont++;
             }
             
@@ -76,8 +75,8 @@ public class Agenda extends javax.swing.JFrame {
      Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
      Contudo o método atualizarJTable() é uma exceção
      */
- /*
-    public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) {
+ 
+    public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) throws SQLException, ClassNotFoundException {
         Connection c = null;
         Statement select = null;
         Agenda agenda = new Agenda();
@@ -87,11 +86,9 @@ public class Agenda extends javax.swing.JFrame {
             select = c.createStatement();
 
             ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            Tabela.setValueAt(new Integer(2), 1, 1);//como Tabela é privado é necessário o método 
-            for (int i = 0; i < 50; i++) { //50 pois é o número máx de linhas
-                
-                while (rs.next()) {
-                    
+            Tabela.setValueAt(new Integer(2), 1, 1);
+            for (int i = 0; i < 50; i++) { //50 pois é o número máx de linhas         
+                while (rs.next()) {                   
                     Tabela.setValueAt(medicoResp, i, 0);
                     Tabela.setValueAt(paciente, i, 1);
                     Tabela.setValueAt(status, i, 2);
@@ -110,7 +107,7 @@ public class Agenda extends javax.swing.JFrame {
         }
         System.out.println("Operação feita com sucesso! ");
     }
-     */
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -125,7 +122,7 @@ public class Agenda extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -207,7 +204,7 @@ public class Agenda extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setText("Agenda:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
         jComboBox2.setToolTipText("");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -266,9 +263,9 @@ public class Agenda extends javax.swing.JFrame {
 
         Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", "", "", null, null, null},
-                {"", "", "", null, null, null},
-                {"", "", "", null, null, null},
+                {"", "", null, null, "", null},
+                {"", "", null, null, "", null},
+                {"", "", null, null, "", null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -319,7 +316,7 @@ public class Agenda extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Médico Responsável", "Paciente", "Observações", "Data Início", "Data Fim", "Status"
+                "Médico Responsável", "Paciente", "Data Início", "Data Fim", "Observações", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -473,7 +470,6 @@ public class Agenda extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {

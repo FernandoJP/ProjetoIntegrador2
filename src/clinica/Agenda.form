@@ -494,6 +494,8 @@
                       <Data value="null"/>
                       <Data value="null"/>
                     </Column>
+                    <Column editable="true" title="Data In&#xed;cio" type="java.lang.String"/>
+                    <Column editable="true" title="Data Fim" type="java.lang.String"/>
                     <Column editable="true" title="Observa&#xe7;&#xf5;es" type="java.lang.String">
                       <Data value=""/>
                       <Data value=""/>
@@ -547,8 +549,6 @@
                       <Data value="null"/>
                       <Data value="null"/>
                     </Column>
-                    <Column editable="true" title="Data In&#xed;cio" type="java.lang.String"/>
-                    <Column editable="true" title="Data Fim" type="java.lang.String"/>
                     <Column editable="true" title="Status" type="java.lang.String"/>
                   </Table>
                 </Property>

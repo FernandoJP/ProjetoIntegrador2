@@ -14,6 +14,11 @@ import javax.swing.JOptionPane;
  */
 public class NovoAgendamento extends javax.swing.JFrame {
 
+    String[] medicos = { //tem que ser global
+    };
+    static Connection c = null;
+    static Statement select = null;
+    
     /**
      * Creates new form Prototipo
      */
@@ -21,6 +26,44 @@ public class NovoAgendamento extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
+        modificarJComboBox();
+        
+    }
+    
+    public void modificarJComboBox(){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+            select = c.createStatement();
+
+            //código para inserir valores nas tabelas
+            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+            
+            //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
+            //a função retornarDados retorna um arrayList
+            //get(cont) = função do arrayList que permite obter valores do array
+            //Estrutura do retorno de retornarDados(): Array = [ArrayList medicoResp, ArrayList Paciente, ArrayList dataInicio, ArrayList dataFim, ArrayList status]
+            while (rs.next()) {
+                Tabela.setValueAt(sql.retornarDados()[0].get(cont), cont, 0);
+                Tabela.setValueAt(sql.retornarDados()[1].get(cont), cont, 1);
+                Tabela.setValueAt(sql.retornarDados()[2].get(cont), cont, 2);
+                Tabela.setValueAt(sql.retornarDados()[3].get(cont), cont, 3);
+                Tabela.setValueAt(sql.retornarDados()[4].get(cont), cont, 4);
+                Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
+                cont++;
+            }
+            
+            rs.close();
+            select.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println("Erro no Agenda() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        System.out.println(
+                "Operação feita com sucesso! ");
+    }
     }
     
     /*
@@ -31,20 +74,16 @@ public class NovoAgendamento extends javax.swing.JFrame {
          Envio dos valores digitados pelo usuário para a tabela AGENDAMENTO
          setTabela tem dois arguementos: a tabela a ser editada e o script SQL
          */
-        SQL.setTabela("AGENDAMENTO", "MEDICO_RESP, PACIENTE, DATA_INICIO,DATA_FIM, OBSERVACOES, SERVICO, STATUS)VALUES("
-                + "'" + med_resp_campo.getText()          + "',"
-                + "'" + paciente_campo.getText()          + "'," 
-                + "'" + dt_inicio_campo.getText()         + "',"
-                + "'" + dt_fim_campo.getText()            + "',"
-                + "'" + obs_campo.getText()               + "',"
-                + "'" + servico_campo.getText()           + "',"
+        SQL.setTabela("AGENDAMENTO", "medico_responsavel, paciente, data_inicio,data_fim, observacoes, status)VALUES("
+                + "'" + medico_resp_campo.getEditor().getItem().toString() + "',"
+                + "'" + paciente_campo.getText() + "',"
+                + "'" + dt_inicio_campo.getText() + "',"
+                + "'" + dt_fim_campo.getText() + "',"
+                + "'" + obs_campo.getText() + "',"
                 + "'" + status_seletor.getSelectedItem() + "');");
         //SQL.setTabela("AGENDAMENTO", "(PACIENTE)VALUES('" + paciente_campo.getText() + "');");
     }
-    
-    
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -68,13 +107,11 @@ public class NovoAgendamento extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         dt_fim_campo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        med_resp_campo = new javax.swing.JTextField();
-        servico_campo = new javax.swing.JTextField();
-        status_seletor = new javax.swing.JComboBox<>();
+        status_seletor = new javax.swing.JComboBox<String>();
         dt_inicio_campo = new javax.swing.JTextField();
         paciente_campo = new javax.swing.JTextField();
         obs_campo = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        medico_resp_campo = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -213,26 +250,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
         jLabel12.setText("Data início:");
 
-        med_resp_campo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        med_resp_campo.setForeground(new java.awt.Color(0, 155, 155));
-        med_resp_campo.setText(" ");
-        med_resp_campo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        med_resp_campo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                med_resp_campoActionPerformed(evt);
-            }
-        });
-
-        servico_campo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        servico_campo.setForeground(new java.awt.Color(0, 153, 153));
-        servico_campo.setText(" ");
-        servico_campo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                servico_campoActionPerformed(evt);
-            }
-        });
-
-        status_seletor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
+        status_seletor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
         status_seletor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 status_seletorActionPerformed(evt);
@@ -267,56 +285,52 @@ public class NovoAgendamento extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("Serviço:");
+        medico_resp_campo.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        medico_resp_campo.setForeground(new java.awt.Color(102, 102, 102));
+        medico_resp_campo.setModel(new javax.swing.DefaultComboBoxModel(patternExamples));
+        medico_resp_campo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                medico_resp_campoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(obs_campo))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGap(169, 169, 169)
+                            .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(jLabel14)
+                            .addGap(18, 18, 18)
+                            .addComponent(obs_campo))
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel6))
+                            .addGap(4, 4, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(medico_resp_campo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dt_inicio_campo, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(paciente_campo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dt_fim_campo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(servico_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(95, 95, 95))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dt_inicio_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(med_resp_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(paciente_campo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dt_fim_campo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -325,35 +339,31 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel14)
-                                    .addComponent(obs_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(servico_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(medico_resp_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel14)
+                                .addComponent(obs_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel13)
                                     .addComponent(dt_fim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dt_inicio_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(94, 94, 94)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10))
-                                .addGap(3, 3, 3))))
+                                .addGap(92, 92, 92))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(med_resp_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(paciente_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel12)))
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(49, 49, 49)
                 .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -387,7 +397,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -444,10 +454,6 @@ public class NovoAgendamento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dt_inicio_campoActionPerformed
 
-    private void servico_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servico_campoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_servico_campoActionPerformed
-
     private void status_seletorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_status_seletorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_status_seletorActionPerformed
@@ -460,13 +466,13 @@ public class NovoAgendamento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_obs_campoActionPerformed
 
-    private void med_resp_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_med_resp_campoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_med_resp_campoActionPerformed
-
     private void paciente_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paciente_campoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paciente_campoActionPerformed
+
+    private void medico_resp_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medico_resp_campoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_medico_resp_campoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -506,7 +512,6 @@ public class NovoAgendamento extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -519,10 +524,9 @@ public class NovoAgendamento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTextField med_resp_campo;
+    private javax.swing.JComboBox medico_resp_campo;
     private javax.swing.JTextField obs_campo;
     private javax.swing.JTextField paciente_campo;
-    private javax.swing.JTextField servico_campo;
     private javax.swing.JComboBox<String> status_seletor;
     private javax.swing.JButton voltarBtn;
     // End of variables declaration//GEN-END:variables

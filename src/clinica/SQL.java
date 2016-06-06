@@ -1,8 +1,13 @@
 package clinica;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,39 +33,33 @@ public class SQL {
     static Statement select = null;
 
     /*
-        Método responsável por converter um arquivo TXT especificado via parâmetro para String
-        @param caminho - onde o arquivo TXT está
-        @return - string com os dados do TXT
+     Método responsável por converter um arquivo TXT especificado via parâmetro para String
+     @param caminho - onde o arquivo TXT está
+     @return - string com os dados do TXT
      */
-    public static String txtParaString(String caminho) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(caminho));
-        String text = scanner.useDelimiter("\\A").next();
-        //scanner.close();
-            return text;
-    }
-/*
-    public static String readFile(String caminho) throws IOException {
-
-        File txt = new File(caminho);
-        StringBuilder fileContents = new StringBuilder((int) txt.length());
-        Scanner scanner = new Scanner(txt);
-        String lineSeparator = System.getProperty("line.separator");
+    public static String txtParaString(String caminho) {
         try {
-            while (scanner.hasNextLine()) {
-                fileContents.append(scanner.nextLine() + lineSeparator);
+            File file = new File("src\\clinica\\sql\\Clinica_DDL.txt");
+            //ISO-8859-1 para ler as acentuações corretamente:
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "ISO-8859-1"));
+            StringBuffer stringBuffer = new StringBuffer();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+                stringBuffer.append("\n");
             }
-            return fileContents.toString() + "bosta";
-        } finally {
-            scanner.close();
+            return stringBuffer.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return "Erro";
     }
-*/
+
     public static void criarTabelas() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             select = c.createStatement();
-            System.out.println(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
             select.executeUpdate(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
             //System.out.println(txtParaString("src\\clinica\\sql\\Clinica_DML.txt"));
 
@@ -101,77 +100,68 @@ public class SQL {
      @return vetor de ArrayLists, cada índice do vetor tem um ArrayList com uma coluna
      */
     public ArrayList[] retornarDados() throws SQLException, ClassNotFoundException {
-        //NÃO REUTILIZAR COLUNA ....... POIS CLEAR N FUNCIONA
         //um ArrayList representa uma coluna do BD, ex: coluna PACIENTE. Tem que ser ArrayList pois não sabemos a qtd de elementos
-        ArrayList<String> especialidade = new ArrayList<>();
-        ArrayList<String> medico = new ArrayList<>();
-        ArrayList<String> agendamento = new ArrayList<>();
-        ArrayList<String> unidade = new ArrayList<>();
-        ArrayList<String> status = new ArrayList<>();
+        ArrayList<String> medicoResp = new ArrayList<>();
         ArrayList<String> paciente = new ArrayList<>();
+        ArrayList<String> dataInicio = new ArrayList<>();
+        ArrayList<String> dataFim = new ArrayList<>();
+        ArrayList<String> observacoes = new ArrayList<>();
+        ArrayList<String> status = new ArrayList<>();
         //vetor com ArrayLists com as 7 colunas, o vetor irá conter todos os dados da tabela AGENDAMENTO. 
-        ArrayList[] colunas = new ArrayList[7];
+        ArrayList[] colunas = new ArrayList[6];
 
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
         select = c.createStatement();
 
-        ResultSet rs = select.executeQuery("SELECT * FROM MEDICO;");
+        //ADICIONAR TODOS OS MÉDICOS NO ARRAYLIST 'medicoResp'
+        ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
-            medico.add(rs.getString("NOME"));
+            medicoResp.add(rs.getString("medico_responsavel"));
         }
-        colunas[0] = medico;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
+        colunas[0] = medicoResp;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
         select.close();//para cada loop precisa fechar o select
 
+        //ADICIONAR TODOS OS PACIENTES NO ARRAYLIST 'paciente'
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
-            agendamento.add(rs.getString("AGENDAMENTO_ID"));
+            paciente.add(rs.getString("paciente"));
         }
-        colunas[1] = agendamento; //armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna PACIENTE)
-        select.close();//para cada loop precisa fechar o select
-        /*
-        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-        while (rs.next()) {
-            coluna.add(rs.getString("STATUS"));
-        } 
-        colunas[2] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna STATUS)
-        coluna.clear();//limpar a coluna para reutilizá-la
-        select.close();//para cada loop precisa fechar o select
-        
-        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-        while (rs.next()) {
-            coluna.add(rs.getString("OBSERVACOES"));
-        }     
-        colunas[3] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna OBSERVACOES)
-        coluna.clear();//limpar a coluna para reutilizá-la
-        select.close();//para cada loop precisa fechar o select
-        
-        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-        while (rs.next()) {
-            coluna.add(rs.getString("DATA_INICIO"));
-        }      
-        colunas[4] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna DATA_INICIO)
-        coluna.clear();//limpar a coluna para reutilizá-la
-        select.close();//para cada loop precisa fechar o select
-        
-        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-        while (rs.next()) {
-            coluna.add(rs.getString("DATA_FIM"));
-        }
-        colunas[5] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna DATA_FIM)
-        coluna.clear();//limpar a coluna para reutilizá-la
-        select.close();//para cada loop precisa fechar o select
-        
-        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-        while (rs.next()) {
-            coluna.add(rs.getString("SERVICO"));
-        }
-        colunas[6] = coluna;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna SERVICO)
+        colunas[1] = paciente; 
         select.close();
-         */
-
+        
+        //ADICIONAR TODAS AS DATAS DE INÍCIO NO ARRAYLIST 'dataInicio'
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            dataInicio.add(rs.getString("data_inicio"));
+        }
+        colunas[2] = dataInicio; 
+        select.close();
+        
+        //ADICIONAR TODAS AS DATAS FIM NO ARRAYLIST 'dataFim'
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            dataFim.add(rs.getString("data_fim"));
+        }
+        colunas[3] = dataFim; 
+        select.close();
+        
+        //ADICIONAR TODAS AS OBSERVACOES NO ARRAYLIST 'observacoes'
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            observacoes.add(rs.getString("observacoes"));
+        }
+        colunas[4] = observacoes; 
+        select.close();
+        
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            status.add(rs.getString("status"));
+        }
+        colunas[5] = status; 
+        select.close();
+        
         c.close();
-
         return colunas;
     }
 }
