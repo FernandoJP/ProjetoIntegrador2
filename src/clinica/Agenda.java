@@ -31,6 +31,7 @@ public class Agenda extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
+       
         //Atribuir na posição 0,0 da tabela o arrayList da função retornar
         try {
             Class.forName("org.sqlite.JDBC");
@@ -427,15 +428,21 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void novoAgendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAgendBtnActionPerformed
-        try {
-            new NovoAgendamento().setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        setVisible(false);
-        dispose();
+java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new NovoAgendamento().setVisible(true);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class
+                            .getName()).log(Level.SEVERE, null, ex);
+
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Agenda.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });        
     }//GEN-LAST:event_novoAgendBtnActionPerformed
 
     private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed

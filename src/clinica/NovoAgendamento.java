@@ -15,23 +15,18 @@ import javax.swing.JOptionPane;
 public class NovoAgendamento extends javax.swing.JFrame {
 
     SQL sql = new SQL();
-    
-    String[] medicos = new String[1];  
-    medicos[0] = "Fernando";
-    
+
     static Connection c = null;
     static Statement select = null;
-
-    /**
-     * Creates new form Prototipo
-     */
+    Agenda agenda = new Agenda();
+    
     public NovoAgendamento() throws SQLException, ClassNotFoundException {
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
-        modificarJComboBox();
+        //modificarJComboBox();
         Agenda agenda = new Agenda();
-        agenda.getTabela().getModel().getValueAt(1, 1);
+        System.out.println(agenda.getTabela().getModel().getValueAt(1, 1));
     }
 
     public void modificarJComboBox() {
@@ -114,7 +109,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         dt_inicio_campo = new javax.swing.JTextField();
         paciente_campo = new javax.swing.JTextField();
         obs_campo = new javax.swing.JTextField();
-        medico_resp_campo = new javax.swing.JComboBox();
+        jComboBox1 = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,14 +283,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
             }
         });
 
-        medico_resp_campo.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        medico_resp_campo.setForeground(new java.awt.Color(102, 102, 102));
-        medico_resp_campo.setModel(new javax.swing.DefaultComboBoxModel(medicos));
-        medico_resp_campo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medico_resp_campoActionPerformed(evt);
-            }
-        });
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { agenda.getTabela().getModel().getValueAt(1, 1).toString(), "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -318,9 +306,9 @@ public class NovoAgendamento extends javax.swing.JFrame {
                                 .addComponent(jLabel12)
                                 .addComponent(jLabel6))
                             .addGap(4, 4, Short.MAX_VALUE)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(medico_resp_campo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dt_inicio_campo, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(dt_inicio_campo, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -342,9 +330,8 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(medico_resp_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel14)
@@ -400,7 +387,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -479,10 +466,6 @@ public class NovoAgendamento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_paciente_campoActionPerformed
 
-    private void medico_resp_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medico_resp_campoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_medico_resp_campoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -524,6 +507,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
     private javax.swing.JTextField dt_inicio_campo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -538,7 +522,6 @@ public class NovoAgendamento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JComboBox medico_resp_campo;
     private javax.swing.JTextField obs_campo;
     private javax.swing.JTextField paciente_campo;
     private javax.swing.JComboBox<String> status_seletor;
