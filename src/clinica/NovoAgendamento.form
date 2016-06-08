@@ -514,9 +514,12 @@
             <Component class="javax.swing.JComboBox" name="jComboBox1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { agenda.getTabela().getModel().getValueAt(1, 1).toString(), &quot;Item 2&quot;, &quot;Item 3&quot;, &quot;Item 4&quot; })" type="code"/>
+                  <Connection code="new javax.swing.DefaultComboBoxModel(medicos)" type="code"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String[] medicos = new String[] { agenda.getTabela().getModel().getValueAt(1, 1).toString(), &quot;Item 2&quot;, &quot;Item 3&quot;, &quot;Item 4&quot; }"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

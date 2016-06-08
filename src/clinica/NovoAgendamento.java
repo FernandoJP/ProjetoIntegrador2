@@ -283,7 +283,8 @@ public class NovoAgendamento extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { agenda.getTabela().getModel().getValueAt(1, 1).toString(), "Item 2", "Item 3", "Item 4" }));
+        String[] medicos = new String[] { agenda.getTabela().getModel().getValueAt(1, 1).toString(), "Item 2", "Item 3", "Item 4" }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(medicos));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
