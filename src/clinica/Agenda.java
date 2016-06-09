@@ -3,6 +3,7 @@ package clinica;
 import static clinica.SQL.c;
 import java.sql.*;
 import com.sun.xml.internal.ws.util.StringUtils;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,19 +20,22 @@ import javax.swing.table.TableModel;
 
 /**
  * Projeto Integrador II - Agendamento Eletrônico
+ *
  * @author Fernando José
  */
 public class Agenda extends javax.swing.JFrame {
 
     //arrumar pois agenda() não pode fazer tudo
     public Agenda() throws SQLException, ClassNotFoundException {
+        
+
         Connection c = null;
         Statement select = null;
         int cont = 0;
         initComponents();
         setResizable(false);
         SQL sql = new SQL();
-       
+
         //Atribuir na posição 0,0 da tabela o arrayList da função retornar
         try {
             Class.forName("org.sqlite.JDBC");
@@ -40,7 +44,7 @@ public class Agenda extends javax.swing.JFrame {
 
             //código para inserir valores nas tabelas
             ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            
+
             //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
             //a função retornarDados retorna um arrayList
             //get(cont) = função do arrayList que permite obter valores do array
@@ -54,7 +58,7 @@ public class Agenda extends javax.swing.JFrame {
                 Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
                 cont++;
             }
-            
+
             rs.close();
             select.close();
             c.close();
@@ -64,7 +68,7 @@ public class Agenda extends javax.swing.JFrame {
         }
 
         System.out.println(
-                "Operação feita com sucesso! ");
+                "Operação feita com sucesso! ");   
     }
 
     public JTable getTabela() {
@@ -76,7 +80,6 @@ public class Agenda extends javax.swing.JFrame {
      Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
      Contudo o método atualizarJTable() é uma exceção
      */
- 
     public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) throws SQLException, ClassNotFoundException {
         Connection c = null;
         Statement select = null;
@@ -89,7 +92,7 @@ public class Agenda extends javax.swing.JFrame {
             ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
             Tabela.setValueAt(new Integer(2), 1, 1);
             for (int i = 0; i < 50; i++) { //50 pois é o número máx de linhas         
-                while (rs.next()) {                   
+                while (rs.next()) {
                     Tabela.setValueAt(medicoResp, i, 0);
                     Tabela.setValueAt(paciente, i, 1);
                     Tabela.setValueAt(status, i, 2);
@@ -123,7 +126,7 @@ public class Agenda extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -205,11 +208,11 @@ public class Agenda extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setText("Agenda:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
         jComboBox2.setToolTipText("");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 102, 255));
+        jLabel10.setForeground(new java.awt.Color(27, 105, 138));
         jLabel10.setText("Filtros:");
 
         jPanel4.setBackground(new java.awt.Color(39, 142, 108));
@@ -267,7 +270,6 @@ public class Agenda extends javax.swing.JFrame {
                 {"", "", null, null, "", null},
                 {"", "", null, null, "", null},
                 {"", "", null, null, "", null},
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -397,12 +399,12 @@ public class Agenda extends javax.swing.JFrame {
                     .addComponent(relatorioBtn)
                     .addComponent(relatorioBtn1)
                     .addComponent(jLabel4))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(jLabel44)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -428,7 +430,7 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void novoAgendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAgendBtnActionPerformed
-java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     new NovoAgendamento().setVisible(true);
@@ -442,7 +444,7 @@ java.awt.EventQueue.invokeLater(new Runnable() {
                             .getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });        
+        });
     }//GEN-LAST:event_novoAgendBtnActionPerformed
 
     private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed
@@ -518,6 +520,7 @@ java.awt.EventQueue.invokeLater(new Runnable() {
                 }
             }
         });
+        
     }
 
 
