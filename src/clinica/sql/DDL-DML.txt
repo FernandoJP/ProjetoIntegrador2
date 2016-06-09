@@ -1,9 +1,9 @@
---Habilita o uso de foreign keys
-PRAGMA foreign_keys = ON;
+
 
 drop table if exists especialidade;
 drop table if exists medico;
-drop table if exists agendamento;
+--não apagar agendamentos
+--drop table if exists agendamento;
 drop table if exists unidade;
 drop table if exists status;
 drop table if exists paciente;
@@ -23,13 +23,13 @@ create table medico(
 	nome_medico varchar(50) not null,
 	unidade varchar(50) not null,
 	especialidade varchar(50) not null,
-	primary key(nome_medico)
-	--foreign key(unidade)references unidade(nome_unidade),
-	--foreign key(especialidade)references especialidade(nome_especialidade)
+	primary key(nome_medico),
+	foreign key(unidade)references unidade(nome_unidade),
+	foreign key(especialidade)references especialidade(nome_especialidade)
 
 );
 
-create table agendamento(
+create table if not exists agendamento(
 	agendamento_id integer not null,
 	medico_responsavel varchar(50) not null,
 	paciente varchar(50) not null,
@@ -37,10 +37,10 @@ create table agendamento(
 	data_fim date not null,
 	observacoes varchar(255),
 	status varchar(50) not null,
-	primary key(agendamento_id)
-	--foreign key(medico_responsavel)references medico(nome_medico),
-	--foreign key(paciente)references paciente(nome_paciente),
-	--foreign key(status)references status(nome_status)
+	primary key(agendamento_id),
+	foreign key(medico_responsavel)references medico(nome_medico),
+	foreign key(paciente)references paciente(nome_paciente),
+	foreign key(status)references status(nome_status)
 );
 
 create table status(
@@ -64,12 +64,12 @@ insert into especialidade(nome_especialidade)values('Visão Subnormal');
 --Inserção de medicos 
 insert into  medico(nome_medico, unidade, especialidade)values('Eraldonclóbes Souza', 'Santo Amaro', 'Cirurgia Refrativa');
 insert into  medico(nome_medico, unidade,especialidade)values('Deuzivaldo Ferreira', 'Vila Olímpia', 'Oncologia Ocular');
-insert into  medico(nome_medico, unidade,especialidade)values('Carabino Tiro Certo', 'Vila Olímpia', 'Cirurgia Refrativa');
 insert into  medico(nome_medico, unidade,especialidade)values('Adegesto Pataca', 'Vila Olímpia', 'Oncologia Ocular');
 insert into  medico(nome_medico, unidade,especialidade)values('Antonio Camisão', 'Santo Amaro', 'Cirurgia Refrativa');
 insert into  medico(nome_medico, unidade,especialidade)values('Brizabela Alves', 'Santo Amaro', 'Oftalmopediatria');
 insert into  medico(nome_medico, unidade,especialidade)values('Daniel Dperet Antunes', 'Itaim Bibi', 'Neuro-oftalmologia');
 insert into  medico(nome_medico, unidade,especialidade)values('Godofredo Felisbino Rosa', 'Santo Amaro', 'Neuro-oftalmologia');
+insert into  medico(nome_medico, unidade,especialidade)values('Carabino Tiro Certo', 'Vila Olímpia', 'Cirurgia Refrativa');
 insert into  medico(nome_medico, unidade,especialidade)values('Euliclênssio Babozo', 'Itaim Bibi', 'Visão Subnormal');
 insert into  medico(nome_medico, unidade,especialidade)values('Meidinusa Soares', 'Santo Amaro', 'Oncologia Ocular');
 

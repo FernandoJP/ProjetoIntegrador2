@@ -39,7 +39,7 @@ public class SQL {
      */
     public static String txtParaString(String caminho) {
         try {
-            File file = new File("src\\clinica\\sql\\Clinica_DDL.txt");
+            File file = new File("src\\clinica\\sql\\DDL-DML.txt");//txt que contém comandos DDL e DML
             //ISO-8859-1 para ler as acentuações corretamente:
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "ISO-8859-1"));
             StringBuffer stringBuffer = new StringBuffer();
@@ -55,13 +55,15 @@ public class SQL {
         return "Erro";
     }
 
+    /*
+     Método responsável por obter todos os comandos SQL do arquivo TXT e converter para o arquivo de BD Clinica.sqlite
+     */
     public static void criarTabelas() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
             select = c.createStatement();
-            select.executeUpdate(txtParaString("src\\clinica\\sql\\Clinica_DDL.txt"));
-            //System.out.println(txtParaString("src\\clinica\\sql\\Clinica_DML.txt"));
+            select.executeUpdate(txtParaString("src\\clinica\\sql\\DDL-DML.txt"));
 
             select.close();
             c.close();
@@ -69,7 +71,6 @@ public class SQL {
             System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Operação feita com sucesso! ");
     }
 
     /*
@@ -92,7 +93,6 @@ public class SQL {
             System.err.println("Erro no método setTabela() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Operação feita com sucesso! ");
     }
 
     /*
@@ -127,41 +127,77 @@ public class SQL {
         while (rs.next()) {
             paciente.add(rs.getString("paciente"));
         }
-        colunas[1] = paciente; 
+        colunas[1] = paciente;
         select.close();
-        
+
         //ADICIONAR TODAS AS DATAS DE INÍCIO NO ARRAYLIST 'dataInicio'
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             dataInicio.add(rs.getString("data_inicio"));
         }
-        colunas[2] = dataInicio; 
+        colunas[2] = dataInicio;
         select.close();
-        
+
         //ADICIONAR TODAS AS DATAS FIM NO ARRAYLIST 'dataFim'
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             dataFim.add(rs.getString("data_fim"));
         }
-        colunas[3] = dataFim; 
+        colunas[3] = dataFim;
         select.close();
-        
+
         //ADICIONAR TODAS AS OBSERVACOES NO ARRAYLIST 'observacoes'
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             observacoes.add(rs.getString("observacoes"));
         }
-        colunas[4] = observacoes; 
+        colunas[4] = observacoes;
         select.close();
-        
+
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             status.add(rs.getString("status"));
         }
-        colunas[5] = status; 
+        colunas[5] = status;
         select.close();
-        
+
         c.close();
         return colunas;
+    }
+
+    /*
+     Método responsável por obter os nomes de todos os médicos ou pacientes
+     @param String que deve conter ou 'medico' ou 'paciente'
+     @return Array de tamanho correto com todos os nomes de médicos ou pacientes cadastrados via comando insert into
+     */
+    public static String[] retornarNomes(String medicoOuPaciente) throws SQLException, ClassNotFoundException {
+
+        ArrayList<String> nomesArrayList = new ArrayList<>();
+        ResultSet rs = null;
+
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+        select = c.createStatement();
+
+        if (medicoOuPaciente.equalsIgnoreCase("medico")) { //se o valor passado via parâmetro for 'medico'
+            rs = select.executeQuery("SELECT * FROM MEDICO;"); //selecione a tabela MEDICO
+        } else if (medicoOuPaciente.equalsIgnoreCase("paciente")) { //se o valor passado via parâmetro for 'paciente'
+            rs = select.executeQuery("SELECT * FROM PACIENTE;"); //selecione a tabela PACIENTE
+        }
+        if (medicoOuPaciente.equalsIgnoreCase("medico")) { //se o valor passado via parâmetro for 'medico'
+            while (rs.next()) {
+                nomesArrayList.add(rs.getString("nome_medico")); //adicione no ArrayList nomes de médicos
+            }
+        } else if (medicoOuPaciente.equalsIgnoreCase("paciente")) { //se o valor passado via parâmetro for 'paciente'
+            while (rs.next()) {
+                nomesArrayList.add(rs.getString("nome_paciente")); //adicione no ArrayList nomes de pacientes
+            }
+        }
+
+        //converter arraylist para vetor pois a função deve retornar um vetor:
+        String[] nomes = nomesArrayList.toArray(new String[nomesArrayList.size()]);
+        select.close();
+        c.close();
+        return nomes;
     }
 }
