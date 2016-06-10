@@ -208,8 +208,8 @@
                       <Component id="relatorioBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="243" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="216" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
                   <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>

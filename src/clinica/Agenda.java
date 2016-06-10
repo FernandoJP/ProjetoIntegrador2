@@ -27,7 +27,6 @@ public class Agenda extends javax.swing.JFrame {
 
     //arrumar pois agenda() não pode fazer tudo
     public Agenda() throws SQLException, ClassNotFoundException {
-        
 
         Connection c = null;
         Statement select = null;
@@ -36,7 +35,24 @@ public class Agenda extends javax.swing.JFrame {
         setResizable(false);
         atualizarTamanhoJtable();
         SQL sql = new SQL();
-
+        // fazer tudo em funções
+        int key = 20; //0 para não dar exception variável não inicializada
+        for (int j = Tabela.getRowCount()-1; j >= 0; j--) {
+            System.out.println("se "+Tabela.getModel().getValueAt(j, 1)+" != de null");
+            //Ler desde a última posição da tabela até a primeira: 
+            //se o valor não for branco e não for nulo então é a posição j é o tamanho de elementos válidos da tabela
+            if(Tabela.getModel().getValueAt(j, 1) != null && !Tabela.getModel().getValueAt(j, 1).equals("")){ //0 é a linha, j é a coluna
+                key = j;
+                System.out.println("j = "+j);
+                break;
+            }
+        }
+        DefaultTableModel dtm = (DefaultTableModel) Tabela.getModel();
+        dtm.setRowCount(0);
+        for (int i = 0; i < key; i++) {
+            int r = Tabela.getRowCount() + 1;
+            dtm.setRowCount(r);
+        }
         //Atribuir na posição 0,0 da tabela o arrayList da função retornar
         try {
             Class.forName("org.sqlite.JDBC");
@@ -66,28 +82,27 @@ public class Agenda extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Erro no Agenda() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
-        } 
+        }
+        
     }
 
     public JTable getTabela() {
         return Tabela;
     }
 
-    private void atualizarTamanhoJtable(){
-    for (int row = 0; row < Tabela.getRowCount(); row++)
-    {
-        int rowHeight = Tabela.getRowHeight();
+    private void atualizarTamanhoJtable() {
+        for (int row = 0; row < Tabela.getRowCount(); row++) {
+            int rowHeight = Tabela.getRowHeight();
 
-        for (int column = 0; column < Tabela.getColumnCount(); column++)
-        {
-            Component comp = Tabela.prepareRenderer(Tabela.getCellRenderer(row, column), row, column);
-            rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            for (int column = 0; column < Tabela.getColumnCount(); column++) {
+                Component comp = Tabela.prepareRenderer(Tabela.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+
+            Tabela.setRowHeight(row, rowHeight);
         }
-
-        Tabela.setRowHeight(row, rowHeight);
     }
-}
-    
+
     /*  
      Método resposável por obter dados vindos da classe SQL e jogar estes dados no JTable
      Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
@@ -138,7 +153,7 @@ public class Agenda extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -220,7 +235,7 @@ public class Agenda extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setText("Agenda:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
         jComboBox2.setToolTipText("");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -414,8 +429,8 @@ public class Agenda extends javax.swing.JFrame {
                     .addComponent(relatorioBtn)
                     .addComponent(relatorioBtn1)
                     .addComponent(jLabel4))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-                .addGap(223, 223, 223)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addGap(250, 250, 250)
                 .addComponent(jLabel44)
                 .addContainerGap())
         );
@@ -533,7 +548,7 @@ public class Agenda extends javax.swing.JFrame {
                 }
             }
         });
-        
+
     }
 
 
