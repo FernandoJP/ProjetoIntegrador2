@@ -29,51 +29,46 @@ public class Agenda extends javax.swing.JFrame {
     Connection c = null;
     Statement select = null;
     SQL sql = new SQL();
-    
+
     public Agenda() throws SQLException, ClassNotFoundException {
-        
-        
-        
+
         initComponents();
         setResizable(false);
-        
-        
-        
-        
+
         configurarJTable();
     }
-    
+
     /*
         Função para alterar o layout e fazer ajustes no JTable que contém a agenda
-    */
-    public void configurarJTable(){
+     */
+    public void configurarJTable() {
         Tabela.getColumnModel().getColumn(0).setPreferredWidth(15); //diminuir largura da coluna ID
         popularJTable();
         configurarQtdeDeLinhas();
         popularJTable();
-  
+
     }
-    
-    public void configurarQtdeDeLinhas(){
+
+    public void configurarQtdeDeLinhas() {
         DefaultTableModel dtm = (DefaultTableModel) Tabela.getModel();
         int key = 0; //0 para não dar exception variável não inicializada
-        for (int j = Tabela.getRowCount()-1; j >= 0; j--) {
+        for (int j = Tabela.getRowCount() - 1; j >= 0; j--) {
             //Ler desde a última posição da tabela até a primeira: 
             //se o valor não for nulo então a posição j é o tamanho de elementos válidos da tabela
-            if(Tabela.getModel().getValueAt(j, 0) != null){ //0 é a linha, j é a coluna
+            if (Tabela.getModel().getValueAt(j, 0) != null) { //0 é a linha, j é a coluna
                 key = j;
-                System.out.println("j = "+j);
+                System.out.println("j = " + j);
                 break;
             }
             dtm.setRowCount(j);
         }
         Tabela.setModel(dtm);
     }
-    
+
     /*
         Método responsável que juntamente com as funções da classe SQL insere dados da tabela AGENDAMENTO para o JTable
-    */
-    public void popularJTable(){
+     */
+    public void popularJTable() {
         int cont = 0;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -102,7 +97,7 @@ public class Agenda extends javax.swing.JFrame {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no popularJTable() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no método popularJTable() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -135,7 +130,6 @@ public class Agenda extends javax.swing.JFrame {
                     Tabela.setValueAt(observacoes, i, 3);
                     Tabela.setValueAt(dataInicio, i, 4);
                     Tabela.setValueAt(dataFim, i, 5);
-                    Tabela.setValueAt("blablabla", 1, 5);
                 }
                 //rs.close();
                 //select.close();
@@ -521,13 +515,15 @@ public class Agenda extends javax.swing.JFrame {
                     Logger.getLogger(Agenda.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }
+                setVisible(false);
+                dispose();
             }
         });
     }//GEN-LAST:event_novoAgendBtnActionPerformed
 
     private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed
         try {
-            new Relatorio2().setVisible(true);
+            new Relatorio().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -539,12 +535,12 @@ public class Agenda extends javax.swing.JFrame {
 
     private void removerRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistroBtnActionPerformed
         //algoritmo para remover a linha selecionada na tabela ao clicar no botão de remoção
-        
+
         //apagar do Banco de dados
-        System.out.println("Tabela.getSelectRow = "+Tabela.getSelectedRow());
-        System.out.println("Deletando onde id = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
-        SQL.removerRegistro("DELETE FROM AGENDAMENTO WHERE AGENDAMENTO_ID = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
-        
+        System.out.println("Tabela.getSelectRow = " + Tabela.getSelectedRow());
+        System.out.println("Deletando onde id = " + Tabela.getValueAt(Tabela.getSelectedRow(), 0));
+        SQL.removerRegistro("DELETE FROM AGENDAMENTO WHERE AGENDAMENTO_ID = " + Tabela.getValueAt(Tabela.getSelectedRow(), 0));
+
         //deletar do JTable
         DefaultTableModel model = (DefaultTableModel) Tabela.getModel();
         int[] rows = Tabela.getSelectedRows();
@@ -559,9 +555,6 @@ public class Agenda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removerRegistroBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         SQL sql = new SQL();
         sql.criarTabelas();

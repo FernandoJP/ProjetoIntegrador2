@@ -69,7 +69,7 @@ insert into  medico(nome_medico, unidade,especialidade)values('Antonio Camisão',
 insert into  medico(nome_medico, unidade,especialidade)values('Brizabela Alves', 'Santo Amaro', 'Oftalmopediatria');
 insert into  medico(nome_medico, unidade,especialidade)values('Daniel Dperet Antunes', 'Itaim Bibi', 'Neuro-oftalmologia');
 insert into  medico(nome_medico, unidade,especialidade)values('Godofredo Felisbino Rosa', 'Santo Amaro', 'Neuro-oftalmologia');
-insert into  medico(nome_medico, unidade,especialidade)values('Carabino Tiro Certo', 'Vila Olímpia', 'Cirurgia Refrativa');
+insert into  medico(nome_medico, unidade,especialidade)values('Carabino Souza', 'Vila Olímpia', 'Cirurgia Refrativa');
 insert into  medico(nome_medico, unidade,especialidade)values('Euliclênssio Babozo', 'Itaim Bibi', 'Visão Subnormal');
 insert into  medico(nome_medico, unidade,especialidade)values('Meidinusa Soares', 'Santo Amaro', 'Oncologia Ocular');
 
@@ -101,7 +101,7 @@ insert into paciente(nome_paciente, idade)values('Márcia Oriana Mota', 18);
 insert into paciente(nome_paciente, idade)values('Anind Godo Eanes', 5);
 insert into paciente(nome_paciente, idade)values('Brás Lília Gago', 52);
 insert into paciente(nome_paciente, idade)values('Ilma Gabriela Moutinho', 89);
-insert into paciente(nome_paciente, idade)values('Maria Suvaqueira da Suaman', 63);
+insert into paciente(nome_paciente, idade)values('Maria Santos Assunção', 63);
 insert into paciente(nome_paciente, idade)values('Hélder Frederica Couto', 25);
 insert into paciente(nome_paciente, idade)values('Tomásia Zulmira Temes', 26);
 insert into paciente(nome_paciente, idade)values('Carla Dorindo Maranhão', 34);

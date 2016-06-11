@@ -20,7 +20,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
     static Connection c = null;
     static Statement select = null;
     Agenda agenda = new Agenda();
-    
+
     public NovoAgendamento() throws SQLException, ClassNotFoundException {
         initComponents();
         setResizable(false);
@@ -29,41 +29,9 @@ public class NovoAgendamento extends javax.swing.JFrame {
         Agenda agenda = new Agenda();
     }
 
-    public void modificarJComboBox() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            select = c.createStatement();
 
-            //código para inserir valores nas tabelas
-            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
 
-            //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
-            //a função retornarDados retorna um arrayList
-            //get(cont) = função do arrayList que permite obter valores do array
-            //Estrutura do retorno de retornarDados(): Array = [ArrayList medicoResp, ArrayList Paciente, ArrayList dataInicio, ArrayList dataFim, ArrayList status]
-            while (rs.next()) {
-                Tabela.setValueAt(sql.retornarDados()[0].get(cont), cont, 0);
-                Tabela.setValueAt(sql.retornarDados()[1].get(cont), cont, 1);
-                Tabela.setValueAt(sql.retornarDados()[2].get(cont), cont, 2);
-                Tabela.setValueAt(sql.retornarDados()[3].get(cont), cont, 3);
-                Tabela.setValueAt(sql.retornarDados()[4].get(cont), cont, 4);
-                Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
-                cont++;
-            }
-
-            rs.close();
-            select.close();
-            c.close();
-        } catch (Exception e) {
-            System.err.println("Erro no Agenda() - " + e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-        System.out.println(
-                "Operação feita com sucesso! ");
-    }
-
+    
     /*
      Algoritmo executado quando o botão "criar" for clicado
      */
@@ -79,7 +47,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 + "'" + dt_fim_campo.getText() + "',"
                 + "'" + obs_campo.getText() + "',"
                 + "'" + status_seletor.getSelectedItem() + "');");
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -314,14 +282,14 @@ public class NovoAgendamento extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel6))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel10))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel14))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel13)))
+                                .addComponent(jLabel13))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel10)))
                         .addGap(4, 4, 4)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -381,10 +349,10 @@ public class NovoAgendamento extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
                             .addComponent(obs_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(38, 38, 38)
                 .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94))
         );

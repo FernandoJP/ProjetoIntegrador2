@@ -47,7 +47,6 @@ public class Relatorio extends javax.swing.JFrame {
         Função para alterar o layout e fazer ajustes no JTable que contém a agenda
     */
     public void configurarJTable(){
-        Tabela.getColumnModel().getColumn(0).setPreferredWidth(15); //diminuir largura da coluna ID
         popularJTable();
         configurarQtdeDeLinhas();
         popularJTable();
@@ -160,19 +159,23 @@ public class Relatorio extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        novoAgendBtn = new javax.swing.JButton();
-        relatorioBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
-        removerRegistroBtn = new javax.swing.JButton();
         Descricao = new javax.swing.JLabel();
-        Descricao1 = new javax.swing.JLabel();
+        paciente_campo = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        dt_fim_campo = new javax.swing.JTextField();
+        status_seletor = new javax.swing.JComboBox<>();
+        dt_inicio_campo = new javax.swing.JTextField();
+        medico_resp_campo = new javax.swing.JComboBox();
+        criar_btn = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,18 +239,7 @@ public class Relatorio extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(39, 142, 108));
-        jLabel3.setText("Agenda");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("Agenda:");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médico 1", "Médico 2", "Médico 3" }));
-        jComboBox2.setToolTipText("");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(27, 105, 138));
-        jLabel10.setText("Filtros:");
+        jLabel3.setText("Relatório");
 
         jPanel4.setBackground(new java.awt.Color(39, 142, 108));
 
@@ -273,169 +265,197 @@ public class Relatorio extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
 
-        novoAgendBtn.setBackground(new java.awt.Color(228, 238, 238));
-        novoAgendBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        novoAgendBtn.setForeground(new java.awt.Color(102, 102, 102));
-        novoAgendBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/novo-agendamento-icon.png"))); // NOI18N
-        novoAgendBtn.setText("Novo agendamento");
-        novoAgendBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        novoAgendBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                novoAgendBtnActionPerformed(evt);
-            }
-        });
-
-        relatorioBtn.setBackground(new java.awt.Color(228, 238, 238));
-        relatorioBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        relatorioBtn.setForeground(new java.awt.Color(102, 102, 102));
-        relatorioBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/relatorios-icon.png"))); // NOI18N
-        relatorioBtn.setText("Gerar relatório");
-        relatorioBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        relatorioBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                relatorioBtnActionPerformed(evt);
-            }
-        });
-
         Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "", "", null, null, "", null},
-                {null, "", "", null, null, "", null},
-                {null, "", "", null, null, "", null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "ID", "Médico Responsável", "Paciente", "Data Início", "Data Fim", "Observações", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         Tabela.setToolTipText("");
         Tabela.setFocusable(false);
         Tabela.setGridColor(new java.awt.Color(180, 129, 129));
         jScrollPane1.setViewportView(Tabela);
 
-        removerRegistroBtn.setBackground(new java.awt.Color(228, 238, 238));
-        removerRegistroBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        removerRegistroBtn.setForeground(new java.awt.Color(102, 102, 102));
-        removerRegistroBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
-        removerRegistroBtn.setText("Remover Registro");
-        removerRegistroBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        removerRegistroBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removerRegistroBtnActionPerformed(evt);
-            }
-        });
-
         Descricao.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
         Descricao.setForeground(new java.awt.Color(102, 102, 102));
         Descricao.setText("Visualize a agenda completa de cada médico. Você pode apagar agendamentos ou ir para o formulário de criação de agendamentos ");
 
-        Descricao1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        Descricao1.setForeground(new java.awt.Color(102, 102, 102));
-        Descricao1.setText("e de geração de relatórios.");
+        String pacientes[] = null;
+        try{
+            pacientes = SQL.retornarNomes("paciente");
+        } catch (SQLException ex2) {
+            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex2);
+        } catch (ClassNotFoundException ex2) {
+            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+        paciente_campo.setModel(new javax.swing.DefaultComboBoxModel(pacientes));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel13.setText("Data início");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel10.setText("Status:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel6.setText("Médico responsável:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setText("Paciente:");
+
+        dt_fim_campo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        dt_fim_campo.setForeground(new java.awt.Color(0, 153, 153));
+        dt_fim_campo.setText(" ");
+        dt_fim_campo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dt_fim_campoActionPerformed(evt);
+            }
+        });
+
+        status_seletor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
+        status_seletor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                status_seletorActionPerformed(evt);
+            }
+        });
+
+        dt_inicio_campo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+        dt_inicio_campo.setForeground(new java.awt.Color(0, 153, 153));
+        dt_inicio_campo.setText(" ");
+        dt_inicio_campo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dt_inicio_campoActionPerformed(evt);
+            }
+        });
+
+        String medicos[] = null;
+        try { //sem esse estrutura de excessão não funciona
+            medicos = SQL.retornarNomes("medico");
+        } catch (SQLException ex) {
+            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        medico_resp_campo.setModel(new javax.swing.DefaultComboBoxModel(medicos));
+
+        criar_btn.setBackground(new java.awt.Color(107, 105, 138));
+        criar_btn.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        criar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        criar_btn.setText("Gerar Relatório");
+        criar_btn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        criar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criar_btnActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Data fim:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -443,25 +463,47 @@ public class Relatorio extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(216, 216, 216)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Descricao1)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Descricao)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(557, 557, 557)
+                        .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(406, 406, 406)
                         .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(novoAgendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(removerRegistroBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Descricao))
+                        .addGap(87, 87, 87)
+                        .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(245, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(406, 406, 406)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel13))
+                    .addGap(4, 4, 4)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(dt_inicio_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(medico_resp_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(19, 19, 19)
+                            .addComponent(jLabel7))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel15)))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(dt_fim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(14, 14, 14)
+                            .addComponent(paciente_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(418, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,18 +513,33 @@ public class Relatorio extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(Descricao1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(167, 167, 167)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(novoAgendBtn)
-                    .addComponent(relatorioBtn)
-                    .addComponent(removerRegistroBtn))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addGap(284, 284, 284))
+                    .addComponent(jLabel10)
+                    .addComponent(status_seletor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(94, 94, 94)
+                .addComponent(criar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(276, 276, 276)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(medico_resp_campo)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(paciente_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(dt_fim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dt_inicio_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15))
+                            .addGap(4, 4, 4))
+                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(422, 422, 422)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -507,57 +564,21 @@ public class Relatorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void novoAgendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAgendBtnActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new NovoAgendamento().setVisible(true);
+    private void dt_fim_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dt_fim_campoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dt_fim_campoActionPerformed
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(Relatorio.class
-                            .getName()).log(Level.SEVERE, null, ex);
+    private void status_seletorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_status_seletorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_status_seletorActionPerformed
 
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Relatorio.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }//GEN-LAST:event_novoAgendBtnActionPerformed
+    private void dt_inicio_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dt_inicio_campoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dt_inicio_campoActionPerformed
 
-    private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed
-        try {
-            new Relatorio2().setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_relatorioBtnActionPerformed
+    private void criar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criar_btnActionPerformed
 
-    private void removerRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistroBtnActionPerformed
-        //algoritmo para remover a linha selecionada na tabela ao clicar no botão de remoção
-        
-        //apagar do Banco de dados
-        System.out.println("Tabela.getSelectRow = "+Tabela.getSelectedRow());
-        System.out.println("Deletando onde id = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
-        SQL.removerRegistro("DELETE FROM AGENDAMENTO WHERE AGENDAMENTO_ID = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
-        
-        //deletar do JTable
-        DefaultTableModel model = (DefaultTableModel) Tabela.getModel();
-        int[] rows = Tabela.getSelectedRows();
-        TableModel tm = Tabela.getModel();
-        while (rows.length > 0) {
-            ((DefaultTableModel) tm).removeRow(Tabela.convertRowIndexToModel(rows[0]));
-            rows = Tabela.getSelectedRows();
-        }
-        Tabela.clearSelection();
-        for (int row : rows) {
-            model.removeRow(Tabela.convertRowIndexToModel(row));
-        }
-    }//GEN-LAST:event_removerRegistroBtnActionPerformed
+    }//GEN-LAST:event_criar_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -616,17 +637,21 @@ public class Relatorio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Descricao;
-    private javax.swing.JLabel Descricao1;
     private javax.swing.JTable Tabela;
+    private javax.swing.JButton criar_btn;
+    private javax.swing.JTextField dt_fim_campo;
+    private javax.swing.JTextField dt_inicio_campo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -634,8 +659,8 @@ public class Relatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton novoAgendBtn;
-    private javax.swing.JButton relatorioBtn;
-    private javax.swing.JButton removerRegistroBtn;
+    private javax.swing.JComboBox medico_resp_campo;
+    private javax.swing.JComboBox paciente_campo;
+    private javax.swing.JComboBox<String> status_seletor;
     // End of variables declaration//GEN-END:variables
 }
