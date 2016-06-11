@@ -71,7 +71,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         dt_fim_campo = new javax.swing.JTextField();
-        status_seletor = new javax.swing.JComboBox<>();
+        status_seletor = new javax.swing.JComboBox<String>();
         dt_inicio_campo = new javax.swing.JTextField();
         obs_campo = new javax.swing.JTextField();
         medico_resp_campo = new javax.swing.JComboBox();
@@ -210,7 +210,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
             }
         });
 
-        status_seletor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
+        status_seletor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Paciente atendido", "Cancelado", "Não compareceu" }));
         status_seletor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 status_seletorActionPerformed(evt);

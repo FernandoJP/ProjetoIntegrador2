@@ -163,7 +163,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jComboBox2" min="-2" pref="159" max="-2" attributes="0"/>
+                          <Component id="medico_resp_campo" min="-2" pref="159" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="novoAgendBtn" min="-2" pref="163" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -191,7 +191,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                      <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="medico_resp_campo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="novoAgendBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="relatorioBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="removerRegistroBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -225,18 +225,15 @@
             <Property name="text" type="java.lang.String" value="Agenda:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="medico_resp_campo">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="M&#xe9;dico 1"/>
-                <StringItem index="1" value="M&#xe9;dico 2"/>
-                <StringItem index="2" value="M&#xe9;dico 3"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel(medicos" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String medicos[] = null;&#xa;try { //sem esse estrutura de excess&#xe3;o n&#xe3;o funciona   &#xa;            medicos = SQL.retornarNomes(&quot;medico&quot;);&#xa;        } catch (SQLException ex) {&#xa;            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);&#xa;        } catch (ClassNotFoundException ex) {&#xa;            Logger.getLogger(NovoAgendamento.class.getName()).log(Level.SEVERE, null, ex);&#xa;        }"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
