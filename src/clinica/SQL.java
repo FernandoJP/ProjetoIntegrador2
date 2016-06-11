@@ -101,6 +101,7 @@ public class SQL {
      */
     public ArrayList[] retornarDados() throws SQLException, ClassNotFoundException {
         //um ArrayList representa uma coluna do BD, ex: coluna PACIENTE. Tem que ser ArrayList pois não sabemos a qtd de elementos
+        ArrayList<String> id = new ArrayList<>();
         ArrayList<String> medicoResp = new ArrayList<>();
         ArrayList<String> paciente = new ArrayList<>();
         ArrayList<String> dataInicio = new ArrayList<>();
@@ -108,18 +109,26 @@ public class SQL {
         ArrayList<String> observacoes = new ArrayList<>();
         ArrayList<String> status = new ArrayList<>();
         //vetor com ArrayLists com as 7 colunas, o vetor irá conter todos os dados da tabela AGENDAMENTO. 
-        ArrayList[] colunas = new ArrayList[6];
+        ArrayList[] colunas = new ArrayList[7];
 
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
         select = c.createStatement();
 
-        //ADICIONAR TODOS OS MÉDICOS NO ARRAYLIST 'medicoResp'
+        //ADICIONAR TODOS OS IDS NO ARRAYLIST 'id'
         ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
+        while (rs.next()) {
+            id.add(rs.getString("agendamento_id"));
+        }
+        colunas[0] = id;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
+        select.close();//para cada loop precisa fechar o select
+        
+        //ADICIONAR TODOS OS MÉDICOS NO ARRAYLIST 'medicoResp'
+        rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             medicoResp.add(rs.getString("medico_responsavel"));
         }
-        colunas[0] = medicoResp;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
+        colunas[1] = medicoResp;//armazenar no vetor de ArrayLists o primeiro ArrayList (dados da coluna MEDICO_RESP)
         select.close();//para cada loop precisa fechar o select
 
         //ADICIONAR TODOS OS PACIENTES NO ARRAYLIST 'paciente'
@@ -127,7 +136,7 @@ public class SQL {
         while (rs.next()) {
             paciente.add(rs.getString("paciente"));
         }
-        colunas[1] = paciente;
+        colunas[2] = paciente;
         select.close();
 
         //ADICIONAR TODAS AS DATAS DE INÍCIO NO ARRAYLIST 'dataInicio'
@@ -135,7 +144,7 @@ public class SQL {
         while (rs.next()) {
             dataInicio.add(rs.getString("data_inicio"));
         }
-        colunas[2] = dataInicio;
+        colunas[3] = dataInicio;
         select.close();
 
         //ADICIONAR TODAS AS DATAS FIM NO ARRAYLIST 'dataFim'
@@ -143,7 +152,7 @@ public class SQL {
         while (rs.next()) {
             dataFim.add(rs.getString("data_fim"));
         }
-        colunas[3] = dataFim;
+        colunas[4] = dataFim;
         select.close();
 
         //ADICIONAR TODAS AS OBSERVACOES NO ARRAYLIST 'observacoes'
@@ -151,14 +160,14 @@ public class SQL {
         while (rs.next()) {
             observacoes.add(rs.getString("observacoes"));
         }
-        colunas[4] = observacoes;
+        colunas[5] = observacoes;
         select.close();
 
         rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
         while (rs.next()) {
             status.add(rs.getString("status"));
         }
-        colunas[5] = status;
+        colunas[6] = status;
         select.close();
 
         c.close();
@@ -199,5 +208,24 @@ public class SQL {
         select.close();
         c.close();
         return nomes;
+    }
+    
+    /*
+        Método responsável por remover um registro do BD
+        @param comando é a instrução SQL. Ex: delete from agendamento
+    */
+    public static void removerRegistro(String comando) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
+            select = c.createStatement();
+            select.executeUpdate(comando);
+
+            select.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println("Erro no método criarTabelas() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 }

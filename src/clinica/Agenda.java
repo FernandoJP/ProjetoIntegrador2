@@ -26,34 +26,55 @@ import javax.swing.table.TableModel;
 public class Agenda extends javax.swing.JFrame {
 
     //arrumar pois agenda() não pode fazer tudo
+    Connection c = null;
+    Statement select = null;
+    SQL sql = new SQL();
+    
     public Agenda() throws SQLException, ClassNotFoundException {
-
-        Connection c = null;
-        Statement select = null;
-        int cont = 0;
+        
+        
+        
         initComponents();
         setResizable(false);
-        atualizarTamanhoJtable();
-        SQL sql = new SQL();
-        // fazer tudo em funções
-        int key = 20; //0 para não dar exception variável não inicializada
+        
+        
+        
+        
+        configurarJTable();
+    }
+    
+    /*
+        Função para alterar o layout e fazer ajustes no JTable que contém a agenda
+    */
+    public void configurarJTable(){
+        Tabela.getColumnModel().getColumn(0).setPreferredWidth(15); //diminuir largura da coluna ID
+        popularJTable();
+        configurarQtdeDeLinhas();
+        popularJTable();
+  
+    }
+    
+    public void configurarQtdeDeLinhas(){
+        DefaultTableModel dtm = (DefaultTableModel) Tabela.getModel();
+        int key = 0; //0 para não dar exception variável não inicializada
         for (int j = Tabela.getRowCount()-1; j >= 0; j--) {
-            System.out.println("se "+Tabela.getModel().getValueAt(j, 1)+" != de null");
             //Ler desde a última posição da tabela até a primeira: 
-            //se o valor não for branco e não for nulo então é a posição j é o tamanho de elementos válidos da tabela
-            if(Tabela.getModel().getValueAt(j, 1) != null && !Tabela.getModel().getValueAt(j, 1).equals("")){ //0 é a linha, j é a coluna
+            //se o valor não for nulo então a posição j é o tamanho de elementos válidos da tabela
+            if(Tabela.getModel().getValueAt(j, 0) != null){ //0 é a linha, j é a coluna
                 key = j;
                 System.out.println("j = "+j);
                 break;
             }
+            dtm.setRowCount(j);
         }
-        DefaultTableModel dtm = (DefaultTableModel) Tabela.getModel();
-        dtm.setRowCount(0);
-        for (int i = 0; i < key; i++) {
-            int r = Tabela.getRowCount() + 1;
-            dtm.setRowCount(r);
-        }
-        //Atribuir na posição 0,0 da tabela o arrayList da função retornar
+        Tabela.setModel(dtm);
+    }
+    
+    /*
+        Método responsável que juntamente com as funções da classe SQL insere dados da tabela AGENDAMENTO para o JTable
+    */
+    public void popularJTable(){
+        int cont = 0;
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
@@ -73,6 +94,7 @@ public class Agenda extends javax.swing.JFrame {
                 Tabela.setValueAt(sql.retornarDados()[3].get(cont), cont, 3);
                 Tabela.setValueAt(sql.retornarDados()[4].get(cont), cont, 4);
                 Tabela.setValueAt(sql.retornarDados()[5].get(cont), cont, 5);
+                Tabela.setValueAt(sql.retornarDados()[6].get(cont), cont, 6);
                 cont++;
             }
 
@@ -80,27 +102,13 @@ public class Agenda extends javax.swing.JFrame {
             select.close();
             c.close();
         } catch (Exception e) {
-            System.err.println("Erro no Agenda() - " + e.getClass().getName() + ": " + e.getMessage());
+            System.err.println("Erro no popularJTable() - " + e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        
     }
 
     public JTable getTabela() {
         return Tabela;
-    }
-
-    private void atualizarTamanhoJtable() {
-        for (int row = 0; row < Tabela.getRowCount(); row++) {
-            int rowHeight = Tabela.getRowHeight();
-
-            for (int column = 0; column < Tabela.getColumnCount(); column++) {
-                Component comp = Tabela.prepareRenderer(Tabela.getCellRenderer(row, column), row, column);
-                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
-            }
-
-            Tabela.setRowHeight(row, rowHeight);
-        }
     }
 
     /*  
@@ -158,14 +166,13 @@ public class Agenda extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
         novoAgendBtn = new javax.swing.JButton();
         relatorioBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
-        relatorioBtn1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        removerRegistroBtn = new javax.swing.JButton();
         Descricao = new javax.swing.JLabel();
+        Descricao1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -256,7 +263,7 @@ public class Agenda extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(176, 176, 176)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -265,8 +272,6 @@ public class Agenda extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
-
-        jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
 
         novoAgendBtn.setBackground(new java.awt.Color(228, 238, 238));
         novoAgendBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
@@ -294,63 +299,113 @@ public class Agenda extends javax.swing.JFrame {
 
         Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", "", null, null, "", null},
-                {"", "", null, null, "", null},
-                {"", "", null, null, "", null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, "", "", null, null, "", null},
+                {null, "", "", null, null, "", null},
+                {null, "", "", null, null, "", null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Médico Responsável", "Paciente", "Data Início", "Data Fim", "Observações", "Status"
+                "ID", "Médico Responsável", "Paciente", "Data Início", "Data Fim", "Observações", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -358,25 +413,29 @@ public class Agenda extends javax.swing.JFrame {
             }
         });
         Tabela.setToolTipText("");
+        Tabela.setFocusable(false);
+        Tabela.setGridColor(new java.awt.Color(180, 129, 129));
         jScrollPane1.setViewportView(Tabela);
 
-        relatorioBtn1.setBackground(new java.awt.Color(228, 238, 238));
-        relatorioBtn1.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        relatorioBtn1.setForeground(new java.awt.Color(102, 102, 102));
-        relatorioBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
-        relatorioBtn1.setText("Remover Registro");
-        relatorioBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        relatorioBtn1.addActionListener(new java.awt.event.ActionListener() {
+        removerRegistroBtn.setBackground(new java.awt.Color(228, 238, 238));
+        removerRegistroBtn.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        removerRegistroBtn.setForeground(new java.awt.Color(102, 102, 102));
+        removerRegistroBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica/img/apagar-icone.png"))); // NOI18N
+        removerRegistroBtn.setText("Remover Registro");
+        removerRegistroBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        removerRegistroBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                relatorioBtn1ActionPerformed(evt);
+                removerRegistroBtnActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Remover no BD");
-
         Descricao.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
         Descricao.setForeground(new java.awt.Color(102, 102, 102));
-        Descricao.setText("Esta é a página inicial do sistema. Visualize a agenda completa de cada médico.");
+        Descricao.setText("Visualize a agenda completa de cada médico. Você pode apagar agendamentos ou ir para o formulário de criação de agendamentos ");
+
+        Descricao1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        Descricao1.setForeground(new java.awt.Color(102, 102, 102));
+        Descricao1.setText("e de geração de relatórios.");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -384,55 +443,46 @@ public class Agenda extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(216, 216, 216)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Descricao1)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(863, 863, 863)
-                        .addComponent(jLabel44))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(novoAgendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(relatorioBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel4))
-                            .addComponent(Descricao))))
-                .addContainerGap(223, Short.MAX_VALUE))
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(novoAgendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(relatorioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(removerRegistroBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Descricao))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Descricao)
-                .addGap(45, 45, 45)
+                .addComponent(Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(Descricao1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(novoAgendBtn)
                     .addComponent(relatorioBtn)
-                    .addComponent(relatorioBtn1)
-                    .addComponent(jLabel4))
+                    .addComponent(removerRegistroBtn))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addGap(250, 250, 250)
-                .addComponent(jLabel44)
-                .addContainerGap())
+                .addGap(284, 284, 284))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -476,13 +526,26 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_novoAgendBtnActionPerformed
 
     private void relatorioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtnActionPerformed
-        new Relatorio().setVisible(true);
+        try {
+            new Relatorio2().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_relatorioBtnActionPerformed
 
-    private void relatorioBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioBtn1ActionPerformed
+    private void removerRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistroBtnActionPerformed
         //algoritmo para remover a linha selecionada na tabela ao clicar no botão de remoção
+        
+        //apagar do Banco de dados
+        System.out.println("Tabela.getSelectRow = "+Tabela.getSelectedRow());
+        System.out.println("Deletando onde id = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
+        SQL.removerRegistro("DELETE FROM AGENDAMENTO WHERE AGENDAMENTO_ID = "+Tabela.getValueAt(Tabela.getSelectedRow(), 0));
+        
+        //deletar do JTable
         DefaultTableModel model = (DefaultTableModel) Tabela.getModel();
         int[] rows = Tabela.getSelectedRows();
         TableModel tm = Tabela.getModel();
@@ -494,8 +557,7 @@ public class Agenda extends javax.swing.JFrame {
         for (int row : rows) {
             model.removeRow(Tabela.convertRowIndexToModel(row));
         }
-        Tabela.clearSelection();
-    }//GEN-LAST:event_relatorioBtn1ActionPerformed
+    }//GEN-LAST:event_removerRegistroBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -554,6 +616,7 @@ public class Agenda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Descricao;
+    private javax.swing.JLabel Descricao1;
     private javax.swing.JTable Tabela;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
@@ -564,8 +627,6 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -575,6 +636,6 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton novoAgendBtn;
     private javax.swing.JButton relatorioBtn;
-    private javax.swing.JButton relatorioBtn1;
+    private javax.swing.JButton removerRegistroBtn;
     // End of variables declaration//GEN-END:variables
 }
