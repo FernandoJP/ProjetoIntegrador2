@@ -57,7 +57,6 @@ public class Agenda extends javax.swing.JFrame {
 
     /*
      Método responsável que juntamente com as funções da classe SQL insere dados da tabela AGENDAMENTO para o JTable
-     @param consulta é o comando select
      */
     public void popularJTable() {
         int cont = 0;
@@ -67,7 +66,7 @@ public class Agenda extends javax.swing.JFrame {
             select = c.createStatement();
 
             //código para inserir valores nas tabelas
-            ResultSet rs = select.executeQuery("SELECT PACIENTE FROM AGENDAMENTO;");
+            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
 
             //enquanto existir linhas na tabela AGENDAMENTO, atribua no JTable
             //a função retornarDados retorna um arrayList
@@ -95,42 +94,6 @@ public class Agenda extends javax.swing.JFrame {
 
     public JTable getTabela() {
         return Tabela;
-    }
-
-    /*  
-     Método resposável por obter dados vindos da classe SQL e jogar estes dados no JTable
-     Tudo que for relativo a obtenção e atribuição de dados em SQL será de responsabilidade da classe SQL
-     Contudo o método atualizarJTable() é uma exceção
-     */
-    public void atualizarJTable(String medicoResp, String paciente, String status, String observacoes, String dataInicio, String dataFim) throws SQLException, ClassNotFoundException {
-        Connection c = null;
-        Statement select = null;
-        Agenda agenda = new Agenda();
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src\\clinica\\sql\\Clinica.sqlite");
-            select = c.createStatement();
-
-            ResultSet rs = select.executeQuery("SELECT * FROM AGENDAMENTO;");
-            Tabela.setValueAt(new Integer(2), 1, 1);
-            for (int i = 0; i < 50; i++) { //50 pois é o número máx de linhas         
-                while (rs.next()) {
-                    Tabela.setValueAt(medicoResp, i, 0);
-                    Tabela.setValueAt(paciente, i, 1);
-                    Tabela.setValueAt(status, i, 2);
-                    Tabela.setValueAt(observacoes, i, 3);
-                    Tabela.setValueAt(dataInicio, i, 4);
-                    Tabela.setValueAt(dataFim, i, 5);
-                }
-                //rs.close();
-                //select.close();
-                c.close();
-            }
-        } catch (Exception e) {
-            System.err.println("Erro no método atualizarJTable() - " + e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
     }
 
     @SuppressWarnings("unchecked")

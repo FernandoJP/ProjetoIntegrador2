@@ -20,13 +20,10 @@ public class NovoAgendamento extends javax.swing.JFrame {
     public NovoAgendamento() throws SQLException, ClassNotFoundException {
         initComponents();
         setResizable(false);
-        SQL sql = new SQL();
-        //modificarJComboBox();
-        Agenda agenda = new Agenda();
     }
 
     /*
-     Algoritmo executado quando o botão "criar" for clicado
+     Algoritmo executado quando o botão "enviar" for clicado
      */
     public void criarAgendamento() {
         /*
@@ -305,10 +302,9 @@ public class NovoAgendamento extends javax.swing.JFrame {
                                             .addComponent(paciente_campo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Descricao))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Descricao1)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Descricao)
+                            .addComponent(Descricao1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)

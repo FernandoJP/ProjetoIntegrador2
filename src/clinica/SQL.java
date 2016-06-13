@@ -34,7 +34,7 @@ public class SQL {
      */
     public static String txtParaString(String caminho) {
         try {
-            File file = new File("src\\clinica\\sql\\DDL-DML.txt");//txt que contém comandos DDL e DML
+            File file = new File(caminho);//txt que contém comandos DDL e DML
             //ISO-8859-1 para ler as acentuações corretamente:
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "ISO-8859-1"));
             StringBuffer stringBuffer = new StringBuffer();
